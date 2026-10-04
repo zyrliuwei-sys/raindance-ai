@@ -1533,3 +1533,49 @@
     padding: 24px 20px;
   }
 }
+
+/* Header account: sign-in pill when signed out, avatar menu when signed in. */
+.eg-signin {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid oklch(0.955 0.014 82 / 0.22);
+  color: var(--salt);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.eg-signin:hover {
+  border-color: var(--sun);
+  color: var(--sun);
+}
+.eg-account-slot {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+.eg-header-actions [data-slot='dropdown-menu-trigger'] {
+  box-shadow: 0 0 0 1px oklch(0.83 0.118 72 / 0.45);
+}
+@media (max-width: 540px) {
+  .eg-header-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .eg-signin {
+    min-height: 34px;
+    padding: 0 13px;
+    font-size: 12.5px;
+  }
+}
+
+/* Admin-managed footer badges (/admin/footer-badges). */
+.eg-footer-badges {
+  margin-top: 48px;
+  opacity: 0.85;
+}

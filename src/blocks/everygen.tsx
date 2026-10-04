@@ -22,6 +22,8 @@ import { PRICING_ENABLED } from '@/config/pricing';
 import { apiGet, apiPost } from '@/lib/api-client';
 import { draftGet, draftSet } from '@/lib/draft-store';
 import { m } from '@/paraglide/messages.js';
+import { FooterBadgeList } from '@/components/footer-badge-list';
+import { SiteUserMenu } from '@/components/site-user-menu';
 
 import '@/styles/everygen.css';
 
@@ -86,9 +88,7 @@ export function EverygenHeader() {
           )}
         </nav>
         <div className="eg-header-actions">
-          <Link href="/settings/videos" className="eg-nav-work">
-            {m['everygen.nav.my_videos']()}
-          </Link>
+          <HeaderAccount />
           <a href="/#create" className="eg-button eg-button-small">
             {m['everygen.nav.start']()}
             <ArrowRight size={15} />
@@ -111,6 +111,26 @@ export function EverygenHeader() {
         </details>
       </div>
     </header>
+  );
+}
+
+/** Sign-in button when signed out; account menu (videos, settings, admin) when signed in. */
+function HeaderAccount() {
+  const { data: session, isPending } = useSession();
+  if (isPending) return <span className="eg-account-slot" aria-hidden="true" />;
+  if (!session?.user) {
+    return (
+      <Link href="/sign-in" className="eg-signin">
+        {m['common.sign.sign_in_title']()}
+      </Link>
+    );
+  }
+  return (
+    <SiteUserMenu
+      name={session.user.name || session.user.email}
+      email={session.user.email}
+      image={session.user.image}
+    />
   );
 }
 
@@ -791,6 +811,7 @@ export function EverygenFooter() {
             <Link href="/terms-of-service">{m['everygen.footer.terms']()}</Link>
           </nav>
         </div>
+        <FooterBadgeList className="eg-footer-badges" />
         <p className="eg-footer-mark" aria-hidden="true">
           {name}
           {rest.length > 0 && <small>{rest.join(' ')}</small>}
