@@ -4,6 +4,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "triggers": { "crons": ["* * * * *"] },
   "observability": { "enabled": true },
+  "routes": [{ "pattern": "raindance-ai.net", "custom_domain": true }],
   "vars": {
     "DATABASE_PROVIDER": "d1",
     "VITE_APP_URL": "https://raindance-ai.net",
