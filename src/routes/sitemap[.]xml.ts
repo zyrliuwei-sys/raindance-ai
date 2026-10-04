@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { envConfigs } from '@/config';
+import { GUIDE_PATHS } from '@/config/guides';
 import { baseLocale, locales, localizeUrl } from '@/paraglide/runtime.js';
 
 const STATIC_PATHS = [
@@ -12,6 +13,8 @@ const STATIC_PATHS = [
 
 type Entry = {
   path: string;
+  /** English-only pages: one <url>, no hreflang alternates. */
+  englishOnly?: boolean;
   lastModified?: string;
   changeFrequency: string;
   priority: number;
@@ -27,6 +30,18 @@ function urlFor(path: string, locale: string): string {
 // recommended hreflang form) — so /zh pages are real <loc>s that crawlers and
 // the IndexNow sitemap submit pick up, not just alternates of the en page.
 function entryXml(e: Entry): string {
+  if (e.englishOnly) {
+    return [
+      '  <url>',
+      `    <loc>${urlFor(e.path, baseLocale)}</loc>`,
+      e.lastModified ? `    <lastmod>${e.lastModified}</lastmod>` : null,
+      `    <changefreq>${e.changeFrequency}</changefreq>`,
+      `    <priority>${e.priority}</priority>`,
+      '  </url>',
+    ]
+      .filter(Boolean)
+      .join('\n');
+  }
   const alternates = [
     ...locales.map(
       (loc) =>
@@ -60,6 +75,15 @@ export const Route = createFileRoute('/sitemap.xml')({
           changeFrequency: path === '/blog' ? 'daily' : 'weekly',
           priority: path === '' ? 1 : 0.8,
         }));
+        for (const path of GUIDE_PATHS) {
+          entries.push({
+            path,
+            englishOnly: true,
+            lastModified: '2026-10-04',
+            changeFrequency: 'monthly',
+            priority: 0.9,
+          });
+        }
 
         // Only published project articles belong in the sitemap. The bundled
         // ShipAny tutorial posts are demo content and carry noindex.

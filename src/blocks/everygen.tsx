@@ -17,6 +17,7 @@ import { toast } from 'sonner';
 import { useSession } from '@/core/auth/client';
 import { Link } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
+import { GUIDE_PATHS, type GuidePath } from '@/config/guides';
 import { PRICING_ENABLED } from '@/config/pricing';
 import { apiGet, apiPost } from '@/lib/api-client';
 import { draftGet, draftSet } from '@/lib/draft-store';
@@ -541,24 +542,28 @@ function How() {
       icon: ImagePlus,
       title: m['everygen.how.upload'](),
       desc: m['everygen.how.upload_desc'](),
+      more: m['everygen.how.upload_more'](),
     },
     {
       icon: Film,
       title: m['everygen.how.choose'](),
       desc: m['everygen.how.choose_desc'](),
+      more: m['everygen.how.choose_more'](),
     },
     {
       icon: Download,
       title: m['everygen.how.share'](),
       desc: m['everygen.how.share_desc'](),
+      more: m['everygen.how.share_more'](),
     },
   ];
   return (
     <section id="how" className="eg-how">
       <div className="eg-shell">
         <h2 className="eg-how-title">{m['everygen.how.title']()}</h2>
+        <p className="eg-how-intro">{m['everygen.how.intro']()}</p>
         <ol className="eg-sunset">
-          {steps.map(({ icon: Icon, title, desc }) => (
+          {steps.map(({ icon: Icon, title, desc, more }) => (
             <li key={title}>
               <div className="eg-sky" aria-hidden="true">
                 <span className="eg-sun" />
@@ -566,6 +571,7 @@ function How() {
               <Icon size={20} strokeWidth={1.5} />
               <h3>{title}</h3>
               <p>{desc}</p>
+              <p>{more}</p>
             </li>
           ))}
         </ol>
@@ -662,22 +668,94 @@ function Cta() {
   );
 }
 
+const FAQ_KEYS = [
+  'photo',
+  'length',
+  'time',
+  'lipsync',
+  'music',
+  'affiliated',
+  'share',
+  'label',
+  'privacy',
+  'rights',
+] as const;
+
+function faqItems() {
+  return FAQ_KEYS.map((key) => ({
+    q: m[`everygen.faq.${key}.q`](),
+    a: m[`everygen.faq.${key}.a`](),
+  }));
+}
+
+/** JSON-LD for the homepage: the site, the tool, and the visible FAQ. */
+function HomeStructuredData() {
+  const url = `${envConfigs.app_url}/`;
+  const data = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: envConfigs.app_name,
+      url,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: m['everygen.hero.title'](),
+      url,
+      applicationCategory: 'MultimediaApplication',
+      operatingSystem: 'Web',
+      description: m['common.metadata.description'](),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems().map(({ q, a }) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    },
+  ];
+  return <JsonLd data={data} />;
+}
+
+export function JsonLd({ data }: { data: unknown }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(data).replace(/</g, '\\u003c'),
+      }}
+    />
+  );
+}
+
 function Faq() {
   return (
     <section className="eg-faq eg-shell">
       <h2>{m['everygen.faq.title']()}</h2>
       <div className="eg-faq-list">
-        {(['photo', 'length', 'music', 'share', 'rights'] as const).map(
-          (key) => (
-            <details key={key}>
-              <summary>{m[`everygen.faq.${key}.q`]()}</summary>
-              <p>{m[`everygen.faq.${key}.a`]()}</p>
-            </details>
-          )
-        )}
+        {faqItems().map(({ q, a }) => (
+          <details key={q}>
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>
+        ))}
       </div>
     </section>
   );
+}
+
+function guideLabel(path: GuidePath) {
+  const labels: Record<GuidePath, string> = {
+    '/how-to-make-raindance-ai-video': m['everygen.footer.guide_howto'](),
+    '/raindance-ai-trend': m['everygen.footer.guide_trend'](),
+    '/raindance-music-video': m['everygen.footer.guide_music'](),
+    '/raindance-meme': m['everygen.footer.guide_meme'](),
+    '/genematic-alternative': m['everygen.footer.guide_genematic'](),
+  };
+  return labels[path];
 }
 
 export function EverygenFooter() {
@@ -686,7 +764,24 @@ export function EverygenFooter() {
     <footer className="eg-footer">
       <div className="eg-shell">
         <div className="eg-footer-main">
-          <p className="eg-footer-tagline">{m['everygen.footer.tagline']()}</p>
+          <div className="eg-footer-about">
+            <p className="eg-footer-tagline">
+              {m['everygen.footer.tagline']()}
+            </p>
+            <p className="eg-footer-disclaimer">
+              {m['everygen.footer.disclaimer']()}
+            </p>
+          </div>
+          <nav
+            className="eg-footer-guides"
+            aria-label={m['everygen.footer.guides']()}
+          >
+            {GUIDE_PATHS.map((path) => (
+              <Link key={path} href={path}>
+                {guideLabel(path)}
+              </Link>
+            ))}
+          </nav>
           <nav aria-label={m['everygen.footer.links']()}>
             {PRICING_ENABLED && (
               <Link href="/pricing">{m['everygen.nav.pricing']()}</Link>
@@ -722,6 +817,7 @@ export function EverygenPage() {
       <Cta />
       <Faq />
       <EverygenFooter />
+      <HomeStructuredData />
     </main>
   );
 }

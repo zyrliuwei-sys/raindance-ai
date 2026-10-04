@@ -87,8 +87,19 @@ export const Route = createRootRoute({
           // sans (font-display: optional, so no layout shift either way).
           media: '(min-width: 601px)',
         },
+        { rel: 'icon', href: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+        {
+          rel: 'icon',
+          href: '/favicon-48.png',
+          type: 'image/png',
+          sizes: '48x48',
+        },
         { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
-        { rel: 'apple-touch-icon', href: '/favicon.svg' },
+        {
+          rel: 'apple-touch-icon',
+          href: '/apple-touch-icon.png',
+          sizes: '180x180',
+        },
       ],
     };
   },
