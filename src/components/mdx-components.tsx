@@ -7,7 +7,7 @@ export const mdxComponents: MDXComponents = {
   h1: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        'text-foreground mt-6 mb-2 text-xl font-semibold tracking-tight md:text-2xl',
+        'text-foreground mt-12 mb-3 font-serif text-3xl font-medium italic',
         className
       )}
       {...props}
@@ -16,7 +16,7 @@ export const mdxComponents: MDXComponents = {
   h2: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        'text-foreground mt-6 mb-2 text-lg font-semibold tracking-tight md:text-xl',
+        'text-foreground border-border mt-12 mb-3 border-t pt-8 font-serif text-[1.75rem] leading-tight font-medium italic',
         className
       )}
       {...props}
@@ -25,7 +25,7 @@ export const mdxComponents: MDXComponents = {
   h3: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
-        'text-foreground mt-4 mb-1.5 text-base font-semibold tracking-tight',
+        'text-foreground mt-6 mb-2 text-base font-bold tracking-tight',
         className
       )}
       {...props}
@@ -33,7 +33,7 @@ export const mdxComponents: MDXComponents = {
   ),
   p: ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
     <p
-      className={cn('text-foreground/90 mt-2 leading-7', className)}
+      className={cn('text-foreground/80 mt-3 leading-[1.8]', className)}
       {...props}
     />
   ),
@@ -49,7 +49,7 @@ export const mdxComponents: MDXComponents = {
   ul: ({ className, ...props }: HTMLAttributes<HTMLUListElement>) => (
     <ul
       className={cn(
-        'marker:text-muted-foreground mt-2 ml-6 list-disc space-y-1',
+        'marker:text-primary mt-3 ml-6 list-disc space-y-1',
         className
       )}
       {...props}
@@ -58,7 +58,7 @@ export const mdxComponents: MDXComponents = {
   ol: ({ className, ...props }: HTMLAttributes<HTMLOListElement>) => (
     <ol
       className={cn(
-        'marker:text-muted-foreground mt-2 ml-6 list-decimal space-y-1',
+        'marker:text-primary mt-3 ml-6 list-decimal space-y-1',
         className
       )}
       {...props}

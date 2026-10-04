@@ -81,7 +81,7 @@ function AuthCallbackPage() {
   }, [isPending, session?.user, configQuery.isSuccess, configQuery.data]);
 
   return (
-    <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-3 p-6">
+    <div className="flex min-h-svh flex-col items-center justify-center gap-3 p-6">
       {error ? (
         <p className="text-destructive text-sm">{error}</p>
       ) : (

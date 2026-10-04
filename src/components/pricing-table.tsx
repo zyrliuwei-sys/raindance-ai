@@ -130,7 +130,7 @@ export function PricingTable({
               >
                 {group.label}
                 {group.badge && (
-                  <span className="ml-1.5 rounded-full bg-orange-500 px-1.5 py-0.5 text-[10px] font-semibold text-orange-950">
+                  <span className="bg-primary text-primary-foreground ml-1.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold">
                     {group.badge}
                   </span>
                 )}
@@ -157,10 +157,10 @@ export function PricingTable({
             className={cn(
               'border-border relative flex flex-col rounded-2xl border p-8 transition-all',
               plan.highlight && !plan.plainFrame
-                ? 'bg-card border-orange-500 shadow-lg ring-2 shadow-orange-500/20 ring-orange-500'
+                ? 'bg-card border-primary/70 ring-primary/40 shadow-primary/15 shadow-2xl ring-1'
                 : plan.featured
                   ? 'bg-card ring-foreground/10 shadow-md ring-1'
-                  : 'bg-background hover:border-foreground/30'
+                  : 'bg-card/40 hover:border-foreground/30'
             )}
           >
             {plan.badge && (
@@ -168,7 +168,7 @@ export function PricingTable({
                 className={cn(
                   'absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap',
                   plan.highlight
-                    ? 'bg-orange-500 text-orange-950'
+                    ? 'bg-primary text-primary-foreground'
                     : 'bg-foreground text-background'
                 )}
               >
@@ -185,7 +185,7 @@ export function PricingTable({
 
             {/* Price */}
             <div className="mb-2 flex items-baseline gap-1">
-              <span className="font-serif text-5xl tracking-tight">
+              <span className="font-serif text-6xl leading-none font-medium">
                 {plan.price}
               </span>
               {plan.interval && (
@@ -208,7 +208,7 @@ export function PricingTable({
             )}
 
             {plan.highlight && (
-              <div className="mb-4 flex items-start gap-2 rounded-xl border border-orange-500/40 bg-orange-500/10 px-3 py-2.5 text-sm font-semibold text-orange-700 dark:text-orange-300">
+              <div className="border-primary/30 bg-primary/10 text-primary mb-4 flex items-start gap-2 rounded-xl border px-3 py-2.5 text-sm font-semibold">
                 <Gift className="mt-0.5 size-4 shrink-0" />
                 <span>{plan.highlight}</span>
               </div>
@@ -234,7 +234,7 @@ export function PricingTable({
                 const label = isObj ? feature.label : feature;
                 return (
                   <li key={i} className="flex items-center gap-2.5 text-sm">
-                    <Icon className="text-muted-foreground size-4 shrink-0" />
+                    <Icon className="text-primary/80 size-4 shrink-0" />
                     <span className="text-foreground/90">{label}</span>
                   </li>
                 );

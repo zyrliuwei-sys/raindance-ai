@@ -67,11 +67,14 @@ export async function getAllConfigs(): Promise<ConfigMap> {
 /**
  * Dev-only overrides: `CFG_<SETTING_NAME>=value` in .env.development wins
  * over the database (e.g. CFG_WAFFO_ENABLED=true → waffo_enabled). Lets a
- * local server test providers without editing the shared production config.
- * Ignored in production builds.
+ * local server test providers when using a separate development database.
+ * Ignored in production builds and when local dev shares the remote D1.
  */
 function getDevConfigOverrides(): ConfigMap {
   if (!import.meta.env.DEV || typeof process === 'undefined') return {};
+  // Shared remote D1 is the source of truth for both local dev and Workers.
+  // Local CFG_* values would make the two environments show different settings.
+  if (process.env.D1_REMOTE_HTTP === 'true') return {};
   const result: ConfigMap = {};
   for (const [key, value] of Object.entries(process.env)) {
     if (key.startsWith('CFG_') && value !== undefined) {

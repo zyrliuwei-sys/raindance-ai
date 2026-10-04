@@ -69,6 +69,10 @@ export function staticPageRouteOptions(slug: string) {
         meta: [
           { title: meta.title },
           { name: 'description', content: meta.description },
+          { property: 'og:title', content: meta.title },
+          { property: 'og:description', content: meta.description },
+          { property: 'og:type', content: 'website' },
+          { name: 'twitter:card', content: 'summary' },
         ],
         links: [
           { rel: 'canonical', href: canonical },
@@ -78,6 +82,11 @@ export function staticPageRouteOptions(slug: string) {
             href: localizeUrl(`${envConfigs.app_url}/${slug}`, { locale: loc })
               .href,
           })),
+          {
+            rel: 'alternate',
+            hrefLang: 'x-default',
+            href: `${envConfigs.app_url}/${slug}`,
+          },
         ],
       };
     },
@@ -94,16 +103,18 @@ function StaticPage() {
 
   return (
     <article>
-      <header className="border-border mb-6 border-b pb-5">
-        <h1 className="text-foreground text-3xl font-semibold tracking-tight md:text-4xl">
-          {meta.title}
-        </h1>
-        <p className="text-muted-foreground mt-2 text-sm">{meta.description}</p>
-        <p className="text-muted-foreground mt-2 text-xs">
+      <header className="mb-10">
+        <p className="text-primary font-mono text-[11px] tracking-[0.2em] uppercase">
           {m['common.pages.last_updated']()}: {meta.updated_at}
         </p>
+        <h1 className="text-foreground mt-5 font-serif text-5xl leading-[1.02] font-medium italic md:text-6xl">
+          {meta.title}
+        </h1>
+        <p className="text-muted-foreground mt-5 text-base leading-relaxed">
+          {meta.description}
+        </p>
       </header>
-      <div className="text-foreground/90 text-[15px] leading-7">
+      <div className="text-[15.5px] leading-7">
         <Suspense fallback={null}>
           <Content />
         </Suspense>

@@ -5,6 +5,7 @@ import { Coins } from 'lucide-react';
 
 import { tDynamic } from '@/core/i18n/dynamic';
 import { Link } from '@/core/i18n/navigation';
+import { PRICING_ENABLED } from '@/config/pricing';
 import { apiGet, type PageResult } from '@/lib/api-client';
 import { cn } from '@/lib/utils';
 import { m } from '@/paraglide/messages.js';
@@ -146,16 +147,18 @@ function CreditsPage() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>{m['settings.credits.balance']()}</CardTitle>
-            <Link
-              href="/pricing"
-              className={cn(
-                buttonVariants({ variant: 'outline', size: 'sm' }),
-                'gap-2'
-              )}
-            >
-              <Coins className="size-4" />
-              {m['settings.credits.purchase']()}
-            </Link>
+            {PRICING_ENABLED && (
+              <Link
+                href="/pricing"
+                className={cn(
+                  buttonVariants({ variant: 'outline', size: 'sm' }),
+                  'gap-2'
+                )}
+              >
+                <Coins className="size-4" />
+                {m['settings.credits.purchase']()}
+              </Link>
+            )}
           </div>
         </CardHeader>
         <CardContent>

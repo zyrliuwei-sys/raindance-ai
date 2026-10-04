@@ -10,6 +10,13 @@
 
 import { PaymentInterval, PaymentType } from '@/core/payment/types';
 
+/**
+ * Public pricing switch. While false, the /pricing page redirects home and
+ * every link to it (site header/footer, settings billing/credits) is hidden.
+ * Checkout itself is untouched, so flip this back to true to relaunch.
+ */
+export const PRICING_ENABLED = false;
+
 export type PricingPlanInfo = {
   name: string;
   interval: PaymentInterval;
@@ -30,7 +37,7 @@ export type PricingProduct = {
 };
 
 /**
- * Hotel Lobby AI catalog. A duet video costs a fixed number of credits
+ * Raindance AI catalog. A short video costs a fixed number of credits
  * (see ./hotel-lobby-pricing.ts — 440 at the default 8s reference video), and
  * every pack holds a whole number of videos.
  *
@@ -40,7 +47,7 @@ export type PricingProduct = {
  * Keys MUST match what the pricing UI sends as product_id.
  */
 /**
- * First-order bonus (one 8-second video's worth of credits), granted once per
+ * First-order bonus (one short video's worth of credits), granted once per
  * user on their first paid order — any product, pack or monthly plan, from
  * the $9.90 starter pack up.
  */

@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 
 import { useSession } from '@/core/auth/client';
 import { useRouter } from '@/core/i18n/navigation';
-import { duetCredits } from '@/config/hotel-lobby-pricing';
+import { EVERYGEN_CREDITS } from '@/config/everygen-pricing';
 import { pricingCatalog, qualifiesForFirstOrderBonus } from '@/config/pricing';
 import { apiGet, apiPost } from '@/lib/api-client';
 import { currentPathWithQuery } from '@/lib/redirect';
@@ -80,15 +80,11 @@ export function Pricing({
 
   // Live per-video price so "≈ N videos" matches what generation charges.
   const { data: priceData } = useQuery({
-    queryKey: ['hotel-lobby-price'],
-    queryFn: () =>
-      apiGet<{ credits: number; lengths?: Record<string, number> }>(
-        '/api/hotel-lobby/price'
-      ),
+    queryKey: ['everygen-price'],
+    queryFn: () => apiGet<{ credits: number }>('/api/everygen/price'),
     staleTime: 10 * 60_000,
   });
-  const perVideo = priceData?.credits ?? duetCredits();
-  const perLongVideo = priceData?.lengths?.['15'] ?? duetCredits(15);
+  const perVideo = priceData?.credits ?? EVERYGEN_CREDITS;
 
   function features(credits: number, extra: PricingFeature[]) {
     return [
@@ -100,16 +96,9 @@ export function Pricing({
       },
       {
         icon: Film,
-        label:
-          credits >= perLongVideo
-            ? m['landing.pricing.feature_videos_lengths']({
-                short: Math.floor(credits / perVideo),
-                long: Math.floor(credits / perLongVideo),
-              })
-            : m['landing.pricing.feature_videos_short_only']({
-                short: Math.floor(credits / perVideo),
-                credits: perLongVideo.toLocaleString('en-US'),
-              }),
+        label: m['landing.pricing.feature_videos']({
+          count: Math.floor(credits / perVideo),
+        }),
       },
       { icon: MonitorPlay, label: m['landing.pricing.feature_hd']() },
       ...extra,
@@ -314,30 +303,36 @@ export function Pricing({
   return (
     <Wrapper
       id={dialog ? undefined : 'pricing'}
-      className={
-        dialog ? undefined : 'border-border border-t px-4 py-24 sm:py-32'
-      }
+      className={dialog ? undefined : 'px-4 py-24 sm:py-32'}
     >
       <div className="mx-auto max-w-5xl">
-        <div className={dialog ? 'mb-8 pr-8 text-center' : 'mb-20 text-center'}>
+        <div className={dialog ? 'mb-8 pr-8 text-center' : 'mb-16 text-center'}>
+          {!dialog && (
+            <p className="text-primary mb-5 font-mono text-[11px] tracking-[0.22em] uppercase">
+              {m['landing.pricing.per_video']({
+                credits: perVideo.toLocaleString('en-US'),
+              })}
+            </p>
+          )}
           <h2
             className={
               dialog
-                ? 'font-serif text-2xl font-normal tracking-tight sm:text-3xl'
-                : 'font-serif text-4xl font-normal tracking-tight sm:text-5xl'
+                ? 'font-serif text-3xl font-medium italic sm:text-4xl'
+                : 'font-serif text-5xl leading-none font-medium italic sm:text-7xl'
             }
           >
             {title ?? m['landing.pricing.title']()}
           </h2>
-          <p className="text-muted-foreground mt-5">
+          <p className="text-muted-foreground mx-auto mt-6 max-w-xl">
             {m['landing.pricing.description']()}
           </p>
-          <p className="text-muted-foreground mt-2 text-sm">
-            {m['landing.pricing.per_video_lengths']({
-              short: perVideo.toLocaleString('en-US'),
-              long: perLongVideo.toLocaleString('en-US'),
-            })}
-          </p>
+          {dialog && (
+            <p className="text-muted-foreground mt-2 text-sm">
+              {m['landing.pricing.per_video']({
+                credits: perVideo.toLocaleString('en-US'),
+              })}
+            </p>
+          )}
         </div>
         <PricingTable
           groups={groups}

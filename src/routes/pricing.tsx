@@ -1,12 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
+import { PRICING_ENABLED } from '@/config/pricing';
 import { m } from '@/paraglide/messages.js';
 import { getLocale } from '@/paraglide/runtime.js';
-import { Footer } from '@/blocks/footer';
-import { Header } from '@/blocks/header';
+import { EverygenFooter, EverygenHeader } from '@/blocks/everygen';
 import { Pricing } from '@/blocks/pricing';
 
 export const Route = createFileRoute('/pricing')({
+  beforeLoad: () => {
+    if (!PRICING_ENABLED) throw redirect({ to: '/' });
+  },
   loader: () => {
     const locale = getLocale();
     return {
@@ -28,12 +31,12 @@ export const Route = createFileRoute('/pricing')({
 
 function PricingPage() {
   return (
-    <div className="bg-background text-foreground flex min-h-screen flex-col">
-      <Header />
+    <div className="eg-page bg-background text-foreground flex min-h-screen flex-col">
+      <EverygenHeader />
       <main className="flex-1">
         <Pricing />
       </main>
-      <Footer />
+      <EverygenFooter />
     </div>
   );
 }

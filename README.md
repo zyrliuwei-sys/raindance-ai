@@ -101,7 +101,7 @@ All admin pages include:
 
 ## Cloudflare deployment
 
-The `hotel-lobby-ai` Worker builds and deploys automatically when `main` is
+The `raindance-ai` Worker builds and deploys automatically when `main` is
 pushed. Cloudflare Workers Builds runs `pnpm cf:ci:build`, then
 `pnpm exec wrangler deploy`.
 
@@ -110,6 +110,29 @@ for the Worker name, D1 binding, domain, and public app settings. The CI build
 recreates the ignored `wrangler.jsonc` and `.env.production` files from it.
 Keep credentials in Cloudflare runtime secrets; never add them to this file.
 Database migrations still require a separate review and apply step.
+
+### Shared D1 during local development
+
+This project uses `raindance-ai-db` for both local development and the future
+Cloudflare Worker. In `.env.development`, keep `DATABASE_PROVIDER=d1`,
+`D1_REMOTE_HTTP=true`, and `D1_DATABASE_ID` equal to the `DB` binding in
+`wrangler.production.json`. The local server then reads and writes that same
+remote D1 over Cloudflare's API. `pnpm dev` checks the IDs before starting.
+The `pnpm rbac:init` and `pnpm rbac:assign` scripts use that same D1 target.
+
+Data entered through the local app is already in D1 and will be available to
+the deployed app; no database copy or second round of admin entry is needed.
+The old `data/local.db` file and the former Hotel Lobby D1 database are not
+sources for this project. Apply new reviewed migrations to `raindance-ai-db`
+before deploying code that needs new tables. Local `CFG_*` overrides are
+ignored while using the shared remote D1 so admin settings match in both
+environments.
+
+Before the first deployment, set the real HTTPS app URL in
+`wrangler.production.json` and give the new Worker the same
+`CONFIG_ENCRYPTION_KEY` used by local development. Otherwise encrypted admin
+settings saved locally cannot be read by the Worker. The production build
+currently rejects the temporary localhost URL until this is configured.
 
 ## Claude Code Skills
 

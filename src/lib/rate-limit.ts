@@ -13,13 +13,13 @@ declare global {
 }
 
 function getClientIpFromRequest(request: Request): string {
+  const cfIp = request.headers.get('cf-connecting-ip');
+  if (cfIp) return cfIp;
+  const realIp = request.headers.get('x-real-ip');
+  if (realIp) return realIp;
   const xff = request.headers.get('x-forwarded-for');
   if (xff) return xff.split(',')[0]?.trim() || '';
-  return (
-    request.headers.get('cf-connecting-ip') ||
-    request.headers.get('x-real-ip') ||
-    ''
-  );
+  return '';
 }
 
 function getStore(): Store {
@@ -35,8 +35,12 @@ function buildKey(request: Request, opts: MinIntervalOptions): string {
   const cookie = request.headers.get('cookie') || '';
   const cookieHash = cookie ? md5(cookie) : 'no-cookie';
   const prefix = opts.keyPrefix || 'min-interval';
-  const extra = opts.extraKey ? `|${opts.extraKey}` : '';
-  return `${prefix}|${request.method}|${url.pathname}|${ip}|${cookieHash}${extra}`;
+  // Authenticated callers pass a stable user ID. Do not let a caller evade
+  // their limit by changing forwarded IP headers or clearing cookies.
+  const identity = opts.extraKey
+    ? `user:${opts.extraKey}`
+    : `visitor:${ip}|${cookieHash}`;
+  return `${prefix}|${request.method}|${url.pathname}|${identity}`;
 }
 
 export function enforceMinIntervalRateLimit(

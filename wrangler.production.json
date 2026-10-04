@@ -1,24 +1,23 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "hotel-lobby-ai",
+  "name": "raindance-ai",
   "compatibility_flags": ["nodejs_compat"],
+  "triggers": { "crons": ["* * * * *"] },
   "observability": { "enabled": true },
   "vars": {
     "DATABASE_PROVIDER": "d1",
-    "VITE_APP_URL": "https://hotel-lobby.org",
-    "VITE_APP_NAME": "Hotel Lobby AI",
-    "VITE_APP_DESCRIPTION": "Plan a two-person Hotel Lobby AI filter video and copy a prompt for an image-to-video studio.",
+    "VITE_APP_URL": "https://raindance-ai.net",
+    "VITE_APP_NAME": "Raindance AI",
+    "VITE_APP_DESCRIPTION": "Turn one photo into a cinematic golden-hour seaside video.",
     "VITE_APP_LOGO": "/logo.svg",
     "VITE_DEFAULT_LOCALE": "en"
   },
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "hotel-lobby-db",
-      "database_id": "9c9d279e-2929-4b38-9d0f-0259fb6a96dd",
+      "database_name": "raindance-ai-db",
+      "database_id": "00c5a3b8-4a49-4304-8d6a-86f976a9ec80",
       "migrations_dir": "drizzle"
     }
-  ],
-  "triggers": { "crons": ["* * * * *"] },
-  "routes": [{ "pattern": "hotel-lobby.org", "custom_domain": true }]
+  ]
 }

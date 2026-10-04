@@ -16,6 +16,14 @@ async function createScriptDb() {
   const provider = process.env.DATABASE_PROVIDER || 'sqlite';
   const url = process.env.DATABASE_URL || 'file:data/local.db';
 
+  if (provider === 'd1') {
+    if (process.env.D1_REMOTE_HTTP !== 'true') {
+      throw new Error('D1 scripts require D1_REMOTE_HTTP=true');
+    }
+    const { createD1HttpDb } = await import('../src/core/db/d1-http');
+    return { db: createD1HttpDb() as any, close: () => {} };
+  }
+
   if (provider === 'postgres' || provider === 'postgresql') {
     const { drizzle } = await import('drizzle-orm/postgres-js');
     const postgres = (await import('postgres')).default;
@@ -127,6 +135,7 @@ async function assignRole() {
   }
 }
 
-assignRole()
-  .catch(console.error)
-  .finally(() => process.exit(0));
+assignRole().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

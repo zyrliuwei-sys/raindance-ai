@@ -1,0 +1,1314 @@
+{
+  "sections": [
+    {
+      "text": "NEWSeedance 2.5 & GPT Image 2 are liveCreate stunning 3D modelsvideos3D modelswith one prompt.One studio for i",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 1109
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "144px 0px 64px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "StudiosEvery creative tool, one workspace.Image, video, 3D, voice, music and editing share the same gallery, c",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 1109,
+        "w": 1440,
+        "h": 1619
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "How it worksFrom idea to export in three steps.No prompt engineering, no plugins, no setup. Type, refine, ship",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 2729,
+        "w": 1440,
+        "h": 833
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "ShowcaseMade on Kenerate. Remix anything.Every card carries its prompt and model — open it in the studio, twea",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 3562,
+        "w": 1440,
+        "h": 1598
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "oklab(0.967428 0.000417888 -0.00125271 / 0.3) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "Built forWhatever you make, there’s a workflow ready.CreatorsE-commerceMarketingStudios & agenciesCreatorsPost",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 5159,
+        "w": 1440,
+        "h": 863
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "ModelsThe frontier, the day it drops.We plug in the best generative models the moment they ship — one account,",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 6022,
+        "w": 1440,
+        "h": 706
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "Why KenerateStop juggling six subscriptions. Pay for what you make.One credit balance across every model and s",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 6728,
+        "w": 1440,
+        "h": 1255
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "oklab(0.967428 0.000417888 -0.00125271 / 0.3) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "Everything you can make on KenerateAnime & MangaPhotoreal 4K30-second videoSeedance 2.5 SpicyQwen Image 3Wan 3",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 7983,
+        "w": 1440,
+        "h": 279
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "56px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "PricingBuy credits once. Use them whenever.No subscription required, no expiry. Start free, top up when you ne",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 8262,
+        "w": 1440,
+        "h": 1019
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "oklab(0.967428 0.000417888 -0.00125271 / 0.3) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "FAQQuestions, answered.Everything about models, credits, licensing and what you can build.Still stuck?Real hum",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 9281,
+        "w": 1440,
+        "h": 833
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "From the blogGuides, model drops and prompt recipes.Read all postsModel ComparisonsAug 1, 2026Best AI Music Ge",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 10114,
+        "w": 1440,
+        "h": 830
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "oklab(0.967428 0.000417888 -0.00125271 / 0.3) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    },
+    {
+      "text": "@keyframes border-beam-spin {\n          from { transform: rotate(0deg); }\n          to { transform: rotate(360",
+      "tag": "SECTION",
+      "rect": {
+        "x": 0,
+        "y": 10944,
+        "w": 1440,
+        "h": 709
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "96px 0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "relative"
+      }
+    }
+  ],
+  "headings": [
+    {
+      "text": "Create stunning 3D modelsvideos3D modelswith one prompt.",
+      "tag": "H1",
+      "rect": {
+        "x": 144,
+        "y": 196,
+        "w": 588,
+        "h": 206
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "67.2px",
+        "fontWeight": "700",
+        "lineHeight": "68.544px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "Every creative tool, one workspace.",
+      "tag": "H2",
+      "rect": {
+        "x": 144,
+        "y": 1255,
+        "w": 672,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "From idea to export in three steps.",
+      "tag": "H2",
+      "rect": {
+        "x": 384,
+        "y": 2875,
+        "w": 672,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "Made on Kenerate. Remix anything.",
+      "tag": "H2",
+      "rect": {
+        "x": 144,
+        "y": 3709,
+        "w": 672,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "Whatever you make, there’s a workflow ready.",
+      "tag": "H2",
+      "rect": {
+        "x": 384,
+        "y": 5305,
+        "w": 672,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "The frontier, the day it drops.",
+      "tag": "H2",
+      "rect": {
+        "x": 144,
+        "y": 6168,
+        "w": 597,
+        "h": 48
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "Stop juggling six subscriptions. Pay for what you make.",
+      "tag": "H2",
+      "rect": {
+        "x": 144,
+        "y": 6875,
+        "w": 672,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "Buy credits once. Use them whenever.",
+      "tag": "H2",
+      "rect": {
+        "x": 144,
+        "y": 8409,
+        "w": 672,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "Questions, answered.",
+      "tag": "H2",
+      "rect": {
+        "x": 144,
+        "y": 9427,
+        "w": 438,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "Guides, model drops and prompt recipes.",
+      "tag": "H2",
+      "rect": {
+        "x": 144,
+        "y": 10261,
+        "w": 672,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "45.6px",
+        "fontWeight": "700",
+        "lineHeight": "48.336px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    },
+    {
+      "text": "Your next idea is one prompt away.",
+      "tag": "H2",
+      "rect": {
+        "x": 193,
+        "y": 11163,
+        "w": 1054,
+        "h": 51
+      },
+      "style": {
+        "fontFamily": "\"Google Sans\", \"Google Sans Fallback\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif, \"Google Sans Fallback\", system-ui, sans-serif",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "50.88px",
+        "color": "rgb(9, 9, 11)",
+        "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "display": "block",
+        "gap": "normal",
+        "position": "static"
+      }
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "src": "https://kenerateai.com/_next/image?url=https%3A%2F%2Fstorage.kenerateai.com%2Flogo-white.png&w=64&q=75",
+        "alt": "Kenerate Icon"
+      },
+      {
+        "src": "https://kenerateai.com/_next/image?url=https%3A%2F%2Fstorage.kenerateai.com%2Flogo-black.png&w=64&q=75",
+        "alt": "Kenerate Icon"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-01.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-02.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-03.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-04.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-01.webp",
+        "alt": "Cinematic automotive commercial, wet asphalt reflections, slow dolly, volumetric fog"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-02.webp",
+        "alt": "Conceptual fine-art sci-fi portrait, chrome and silk, editorial lighting"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-03.webp",
+        "alt": "Minimalist 3D papercraft coastal town with a lighthouse, layered pastel paper, soft studio light"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-04.webp",
+        "alt": "Atmospheric cinema world, misty forest cathedral, god rays, slow push-in"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-01.webp",
+        "alt": "Cinematic automotive commercial, wet asphalt reflections, slow dolly, volumetric fog"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-02.webp",
+        "alt": "Conceptual fine-art sci-fi portrait, chrome and silk, editorial lighting"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-03.webp",
+        "alt": "Minimalist 3D papercraft coastal town with a lighthouse, layered pastel paper, soft studio light"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-04.webp",
+        "alt": "Atmospheric cinema world, misty forest cathedral, god rays, slow push-in"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-05.webp",
+        "alt": "Editorial fashion portrait, silver hair, deep teal backdrop, 85mm, film grain"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-06.webp",
+        "alt": "Isometric cozy coffee shop, warm pastel palette, tiny details"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-07.webp",
+        "alt": "Product hero on marble, soft studio light, premium feel — background swapped in Edit"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-08.webp",
+        "alt": "Brutalist concrete villa on a cliff, golden hour, infinity pool, ultra wide"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-05.webp",
+        "alt": "Editorial fashion portrait, silver hair, deep teal backdrop, 85mm, film grain"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-06.webp",
+        "alt": "Isometric cozy coffee shop, warm pastel palette, tiny details"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-07.webp",
+        "alt": "Product hero on marble, soft studio light, premium feel — background swapped in Edit"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-08.webp",
+        "alt": "Brutalist concrete villa on a cliff, golden hour, infinity pool, ultra wide"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-09.webp",
+        "alt": "Low-poly stylised sneaker, clean topology, PBR leather"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-10.webp",
+        "alt": "Macro dew on a spider web at sunrise, bokeh, 100mm macro"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-11.webp",
+        "alt": "Retro 90s anime girl on a neon Tokyo street at night, rain reflections, cinematic wide shot"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-12.webp",
+        "alt": "Watercolor map of a fantasy island, hand-lettered labels"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-09.webp",
+        "alt": "Low-poly stylised sneaker, clean topology, PBR leather"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-10.webp",
+        "alt": "Macro dew on a spider web at sunrise, bokeh, 100mm macro"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-11.webp",
+        "alt": "Retro 90s anime girl on a neon Tokyo street at night, rain reflections, cinematic wide shot"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-12.webp",
+        "alt": "Watercolor map of a fantasy island, hand-lettered labels"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-01.webp",
+        "alt": "Cinematic automotive commercial, wet asphalt reflections, slow dolly, volumetric fog"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-02.webp",
+        "alt": "Conceptual fine-art sci-fi portrait, chrome and silk, editorial lighting"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-03.webp",
+        "alt": "Minimalist 3D papercraft coastal town with a lighthouse, layered pastel paper, soft studio light"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-04.webp",
+        "alt": "Atmospheric cinema world, misty forest cathedral, god rays, slow push-in"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-05.webp",
+        "alt": "Editorial fashion portrait, silver hair, deep teal backdrop, 85mm, film grain"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-06.webp",
+        "alt": "Isometric cozy coffee shop, warm pastel palette, tiny details"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-07.webp",
+        "alt": "Product hero on marble, soft studio light, premium feel — background swapped in Edit"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-08.webp",
+        "alt": "Brutalist concrete villa on a cliff, golden hour, infinity pool, ultra wide"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-image.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-video.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-3d.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-voice.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-music.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-edit.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-story.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-ads.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-campaign.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/studio-presets.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/tool-remove-bg.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/tool-image-upscale.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/tool-video-upscale.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/tool-subtitles.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/step-refine.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-01.webp",
+        "alt": "Cinematic automotive commercial, wet asphalt reflections, slow dolly, volumetric fog"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-02.webp",
+        "alt": "Conceptual fine-art sci-fi portrait, chrome and silk, editorial lighting"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-03.webp",
+        "alt": "Minimalist 3D papercraft coastal town with a lighthouse, layered pastel paper, soft studio light"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-04.webp",
+        "alt": "Atmospheric cinema world, misty forest cathedral, god rays, slow push-in"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-05.webp",
+        "alt": "Editorial fashion portrait, silver hair, deep teal backdrop, 85mm, film grain"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-06.webp",
+        "alt": "Isometric cozy coffee shop, warm pastel palette, tiny details"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-07.webp",
+        "alt": "Product hero on marble, soft studio light, premium feel — background swapped in Edit"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-08.webp",
+        "alt": "Brutalist concrete villa on a cliff, golden hour, infinity pool, ultra wide"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-09.webp",
+        "alt": "Low-poly stylised sneaker, clean topology, PBR leather"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-10.webp",
+        "alt": "Macro dew on a spider web at sunrise, bokeh, 100mm macro"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-11.webp",
+        "alt": "Retro 90s anime girl on a neon Tokyo street at night, rain reflections, cinematic wide shot"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-12.webp",
+        "alt": "Watercolor map of a fantasy island, hand-lettered labels"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/usecase-creators.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-01.webp",
+        "alt": "FLUX.1 Pro"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-02.webp",
+        "alt": "Kling AI v3"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-03.webp",
+        "alt": "Seedance 2"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-04.webp",
+        "alt": "GPT Image 2"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-05.webp",
+        "alt": "Veo 3.1"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-06.webp",
+        "alt": "Suno AI v3.5"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-07.webp",
+        "alt": "Wan 2.7 Pro"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-08.webp",
+        "alt": "ElevenLabs Voice"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-09.webp",
+        "alt": "Kenerate 3D"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/model-10.webp",
+        "alt": "Nemotron Vision"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/why-license.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/why-models.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/why-workflow.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/_next/image?url=https%3A%2F%2Fstorage.kenerateai.com%2Flogo-white.png&w=64&q=75",
+        "alt": "Kenerate Icon"
+      },
+      {
+        "src": "https://kenerateai.com/_next/image?url=https%3A%2F%2Fstorage.kenerateai.com%2Flogo-black.png&w=64&q=75",
+        "alt": "Kenerate Icon"
+      },
+      {
+        "src": "https://storage.kenerateai.com/seo/blog/best-ai-music-generators-2026-suno-vs-udio/cover-v2.webp",
+        "alt": "Best AI Music Generators 2026: Suno vs Udio vs Other Tools Ranked"
+      },
+      {
+        "src": "https://storage.kenerateai.com/seo/blog/best-ai-image-generator-for-onlyfans-creators-2026/cover-v2.webp",
+        "alt": "Best AI Image Generator for OnlyFans Creators (2026 Guide)"
+      },
+      {
+        "src": "https://storage.kenerateai.com/seo/blog/seedance-vs-kling-vs-veo-vs-wan-vs-runway-2026/cover-v2.webp",
+        "alt": "Seedance vs Kling vs Veo vs Wan vs Runway 2026: Which to Pick"
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/cta-backdrop.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-01.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-02.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-03.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-04.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-05.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/home-showcase/hero-06.webp",
+        "alt": ""
+      },
+      {
+        "src": "https://kenerateai.com/_next/image?url=https%3A%2F%2Fstorage.kenerateai.com%2Flogo-white.png&w=64&q=75",
+        "alt": "Kenerate Icon"
+      },
+      {
+        "src": "https://kenerateai.com/_next/image?url=https%3A%2F%2Fstorage.kenerateai.com%2Flogo-black.png&w=64&q=75",
+        "alt": "Kenerate Icon"
+      }
+    ],
+    "videos": [],
+    "backgrounds": [
+      {
+        "tag": "SPAN",
+        "cls": "logo-module__Vgh7Eq__halo",
+        "url": "radial-gradient(closest-side, oklab(0.623066 -0.0332245 -0.185038 / 0.55), rgba(0, 0, 0, 0))"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "logo-module__Vgh7Eq__ai",
+        "url": "linear-gradient(110deg, rgb(59, 130, 246) 38%, oklab(0.905762 -0.00827195 -0.0462444) 50%, rgb(59, 130, 246) 62%)"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "bg-clip-text text-transparent inline-block font-medium text-xs",
+        "url": "linear-gradient(90deg, rgb(9, 9, 11), rgb(9, 9, 11) 45%, rgb(59, 130, 246) 50%, rgb(59, 130, 246) 50%, rgb(9, 9, 11) 55%, rgb(9, 9, 11))"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/4",
+        "url": "linear-gradient(to right, rgba(0, 0, 0, 0) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.4) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.8) 0%, oklab(0 0 0 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-[-100%] aspect-square w-[200%] h-[200%] left-[-50%] top-[-50%] an",
+        "url": "conic-gradient(rgba(0, 0, 0, 0) 0deg, rgba(0, 0, 0, 0) 280deg, rgb(59, 130, 246) 320deg, rgba(0, 0, 0, 0) 360deg)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.05) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.7) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opac",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.85) 0%, oklab(0 0 0 / 0.2) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent lg:bg",
+        "url": "linear-gradient(to right, rgb(255, 255, 255) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.1) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.1) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10",
+        "url": "linear-gradient(to top, oklab(0 0 0 / 0.9) 0%, oklab(0 0 0 / 0.4) 50%, oklab(0 0 0 / 0.1) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-r from-card via-card/30 to-transparent hidden sm",
+        "url": "linear-gradient(to right, rgb(255, 255, 255) 0%, oklab(0.999994 0.0000455678 0.0000200868 / 0.3) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "absolute inset-0 bg-gradient-to-b from-card via-transparent to-transparent sm:hi",
+        "url": "linear-gradient(in oklab, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%)"
+      },
+      {
+        "tag": "DIV",
+        "cls": "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opa",
+        "url": "radial-gradient(240px, oklab(0.623066 -0.0332245 -0.185038 / 0.22), rgba(0, 0, 0, 0) 70%)"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "logo-module__Vgh7Eq__halo",
+        "url": "radial-gradient(closest-side, oklab(0.623066 -0.0332245 -0.185038 / 0.55), rgba(0, 0, 0, 0))"
+      }
+    ]
+  }
+}

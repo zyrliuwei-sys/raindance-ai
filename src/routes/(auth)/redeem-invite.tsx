@@ -96,16 +96,16 @@ function RedeemInvitePage() {
 
   if (isPending || checking) {
     return (
-      <div className="bg-muted flex min-h-svh items-center justify-center">
+      <div className="flex min-h-svh items-center justify-center">
         <div className="border-primary size-6 animate-spin rounded-full border-2 border-t-transparent" />
       </div>
     );
   }
 
   return (
-    <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+    <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <span className="self-center font-serif text-lg italic">
+        <span className="self-center font-serif text-3xl font-medium italic">
           {envConfigs.app_name}
         </span>
         <Card>

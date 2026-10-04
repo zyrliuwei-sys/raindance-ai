@@ -30,11 +30,25 @@ function VideosPage() {
   const [page, setPage] = useState(1);
 
   const query = useQuery({
-    queryKey: ['hotel-lobby-videos', page],
-    queryFn: () =>
-      apiGet<PageResult<VideoRow>>(
-        `/api/hotel-lobby/videos?page=${page}&pageSize=${PAGE_SIZE}`
-      ),
+    queryKey: ['everygen-videos', page],
+    queryFn: async () => {
+      const result = await apiGet<PageResult<VideoRow>>(
+        `/api/everygen/videos?page=${page}&pageSize=${PAGE_SIZE}`
+      );
+      await Promise.all(
+        result.items
+          .filter(
+            (video) =>
+              video.status === 'pending' || video.status === 'processing'
+          )
+          .map((video) =>
+            apiGet(
+              `/api/everygen/task?id=${encodeURIComponent(video.id)}`
+            ).catch(() => null)
+          )
+      );
+      return result;
+    },
     placeholderData: keepPreviousData,
     // Unfinished videos keep moving server-side; refresh until they land.
     refetchInterval: (q) =>
@@ -99,7 +113,7 @@ function VideosPage() {
                 </span>
                 {v.status === 'success' && v.videoUrl ? (
                   <a
-                    href={`/api/hotel-lobby/download?id=${v.id}`}
+                    href={`/api/everygen/download?id=${v.id}`}
                     download
                     className={cn(
                       buttonVariants({ variant: 'outline', size: 'sm' }),

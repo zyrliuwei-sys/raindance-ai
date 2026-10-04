@@ -10,8 +10,8 @@ import {
   type ErrorComponentProps,
 } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-import dmSansLatinUrl from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
-import bebasLatinUrl from '@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff2?url';
+import cormorantItalicUrl from '@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-italic.woff2?url';
+import manropeLatinUrl from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
 import { ThemeProvider } from 'next-themes';
 
 import { envConfigs } from '@/config';
@@ -73,14 +73,14 @@ export const Route = createRootRoute({
           rel: 'preload',
           as: 'font',
           type: 'font/woff2',
-          href: bebasLatinUrl,
+          href: cormorantItalicUrl,
           crossOrigin: 'anonymous',
         },
         {
           rel: 'preload',
           as: 'font',
           type: 'font/woff2',
-          href: dmSansLatinUrl,
+          href: manropeLatinUrl,
           crossOrigin: 'anonymous',
           // Desktop only: on slow mobile networks this 37 KB file competes
           // with the CSS and hero image; body text falls back to the system
@@ -155,9 +155,12 @@ function RootDocument({ children }: { children: ReactNode }) {
 function NotFound() {
   return (
     <div className="bg-background text-foreground flex min-h-screen flex-col items-center justify-center gap-4">
-      <h1 className="text-6xl font-bold">404</h1>
-      <p className="text-muted-foreground">Page not found</p>
-      <a href="/" className="text-sm underline underline-offset-4">
+      <p className="text-primary font-mono text-xs tracking-[0.2em]">
+        00:00:00
+      </p>
+      <h1 className="font-serif text-6xl italic">Lost the light</h1>
+      <p className="text-muted-foreground">This page could not be found.</p>
+      <a href="/" className="text-primary text-sm underline underline-offset-4">
         Back to home
       </a>
     </div>
