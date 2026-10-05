@@ -22,6 +22,11 @@ export type Duration = (typeof DURATIONS)[number];
 export type Quality = (typeof QUALITIES)[number];
 
 export const DEFAULT_DURATION: Duration = 5;
+
+/** 1080p stops at 10 s — a 15 s 1080p clip would cost ~$52 for one video. */
+export function isOffered(duration: Duration, quality: Quality) {
+  return !(quality === '1080p' && duration > 10);
+}
 export const DEFAULT_QUALITY: Quality = '720p';
 
 export function everygenCredits(

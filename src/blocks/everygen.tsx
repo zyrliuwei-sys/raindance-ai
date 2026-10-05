@@ -22,6 +22,7 @@ import {
   DEFAULT_QUALITY,
   DURATIONS,
   everygenCredits,
+  isOffered,
   QUALITIES,
   type Duration,
   type Quality,
@@ -32,6 +33,7 @@ import { apiGet, apiPost } from '@/lib/api-client';
 import { draftGet, draftSet } from '@/lib/draft-store';
 import { track } from '@/lib/track';
 import { m } from '@/paraglide/messages.js';
+import { Pricing } from '@/blocks/pricing';
 import { FooterBadgeList } from '@/components/footer-badge-list';
 import { SiteUserMenu } from '@/components/site-user-menu';
 
@@ -108,7 +110,7 @@ export function EverygenHeader() {
           <a href="/#looks">{m['everygen.nav.looks']()}</a>
           <a href="/#how">{m['everygen.nav.how']()}</a>
           {PRICING_ENABLED && (
-            <Link href="/pricing">{m['everygen.nav.pricing']()}</Link>
+            <a href="/#pricing">{m['everygen.nav.pricing']()}</a>
           )}
         </nav>
         <div className="eg-header-actions">
@@ -128,7 +130,7 @@ export function EverygenHeader() {
             <a href="/#looks">{m['everygen.nav.looks']()}</a>
             <a href="/#how">{m['everygen.nav.how']()}</a>
             {PRICING_ENABLED && (
-              <Link href="/pricing">{m['everygen.nav.pricing']()}</Link>
+              <a href="/#pricing">{m['everygen.nav.pricing']()}</a>
             )}
             <Link href="/settings/videos">{m['everygen.nav.my_videos']()}</Link>
           </nav>
@@ -238,6 +240,7 @@ function Hero() {
 
 function Studio() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const consentRef = useRef<HTMLInputElement>(null);
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [style, setStyle] = useState<Style>('pier');
@@ -250,6 +253,11 @@ function Studio() {
   const [draftReady, setDraftReady] = useState(false);
   const [paywall, setPaywall] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  // What to resume once the auth dialog signs the visitor in.
+  const authNextRef = useRef<'poster' | 'video'>('video');
+  // Set on sign-in so a follow-up error sees the account before the session
+  // store refreshes.
+  const signedInRef = useRef(false);
   // Mount the lazy dialogs on first open and keep them mounted for their
   // close animation.
   const [paywallMounted, setPaywallMounted] = useState(false);
@@ -281,6 +289,12 @@ function Studio() {
         setDuration(draft.duration);
       if (draft?.quality && QUALITIES.includes(draft.quality))
         setQuality(draft.quality);
+      if (
+        draft?.duration &&
+        draft?.quality &&
+        !isOffered(draft.duration, draft.quality)
+      )
+        setQuality('720p');
       if (draft?.audio) setAudio(true);
       if (draft?.consent) setConsent(true);
       if (draft?.posterId) setPosterId(draft.posterId);
@@ -350,12 +364,23 @@ function Studio() {
     },
     onError: (error: Error) => {
       queryClient.invalidateQueries({ queryKey: ['everygen-poster-quota'] });
+      // Free poster used: visitors sign in, signed-in users without credits
+      // get the packs — buying credits lifts the poster limit.
+      if (error.message === FREE_POSTER_USED) {
+        if (session?.user || signedInRef.current) {
+          track('paywall_open', { from: 'poster' });
+          setPaywall(true);
+        } else {
+          authNextRef.current = 'poster';
+          track('auth_dialog_open', { from: 'poster' });
+          setAuthOpen(true);
+        }
+        return;
+      }
       toast.error(
-        error.message === FREE_POSTER_USED
-          ? m['everygen.poster.used']()
-          : error.message === FREE_POSTER_PAUSED
-            ? m['everygen.poster.paused']()
-            : error.message
+        error.message === FREE_POSTER_PAUSED
+          ? m['everygen.poster.paused']()
+          : error.message
       );
     },
   });
@@ -446,6 +471,7 @@ function Studio() {
   function startVideo() {
     if (!posterReady) return;
     if (!session?.user) {
+      authNextRef.current = 'video';
       track('auth_dialog_open', { from: 'studio' });
       setAuthOpen(true);
       return;
@@ -454,6 +480,24 @@ function Studio() {
   }
 
   const quotaUsed = !session?.user && quota.data?.left === 0;
+  const quotaPaused =
+    quota.data?.left === 0 && quota.data.reason === FREE_POSTER_PAUSED;
+
+  function startPoster() {
+    if (!consent) {
+      toast.error(m['everygen.studio.need_consent']());
+      consentRef.current?.scrollIntoView({ block: 'center' });
+      consentRef.current?.focus();
+      return;
+    }
+    if (quotaUsed && !quotaPaused) {
+      authNextRef.current = 'poster';
+      track('auth_dialog_open', { from: 'poster' });
+      setAuthOpen(true);
+      return;
+    }
+    posterMutation.mutate();
+  }
 
   return (
     <section id="create" className="eg-create eg-shell">
@@ -545,6 +589,7 @@ function Studio() {
           </div>
           <label className="eg-consent">
             <input
+              ref={consentRef}
               type="checkbox"
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
@@ -556,12 +601,11 @@ function Studio() {
             className="eg-button eg-submit"
             disabled={
               !photo ||
-              !consent ||
               posterMutation.isPending ||
               posterData?.status === 'pending' ||
-              quotaUsed
+              quotaPaused
             }
-            onClick={() => posterMutation.mutate()}
+            onClick={startPoster}
           >
             {posterMutation.isPending || posterData?.status === 'pending' ? (
               <Loader2 size={18} className="animate-spin" />
@@ -574,9 +618,11 @@ function Studio() {
             <span className="eg-free-tag">{m['everygen.poster.free']()}</span>
           </button>
           <p className="eg-studio-note">
-            {quotaUsed
-              ? m['everygen.poster.used']()
-              : m['everygen.poster.note']()}
+            {quotaPaused
+              ? m['everygen.poster.paused']()
+              : quotaUsed
+                ? m['everygen.poster.used']()
+                : m['everygen.poster.note']()}
           </p>
 
           <div className={`eg-video-step ${posterReady ? '' : 'is-locked'}`}>
@@ -597,7 +643,11 @@ function Studio() {
                       type="button"
                       aria-pressed={duration === item}
                       className={duration === item ? 'active' : ''}
-                      onClick={() => setDuration(item)}
+                      onClick={() => {
+                        setDuration(item);
+                        // 15 s isn't offered at 1080p — step down to 720p.
+                        if (!isOffered(item, quality)) setQuality('720p');
+                      }}
                     >
                       {m['everygen.studio.seconds']({ count: item })}
                     </button>
@@ -619,6 +669,12 @@ function Studio() {
                       type="button"
                       aria-pressed={quality === item}
                       className={quality === item ? 'active' : ''}
+                      disabled={!isOffered(duration, item)}
+                      title={
+                        isOffered(duration, item)
+                          ? undefined
+                          : m['everygen.studio.hd_limit']()
+                      }
                       onClick={() => setQuality(item)}
                     >
                       {item}
@@ -672,9 +728,7 @@ function Studio() {
               {PRICING_ENABLED && (
                 <>
                   {' '}
-                  <Link href="/pricing">
-                    {m['everygen.studio.buy_credits']()}
-                  </Link>
+                  <a href="#pricing">{m['everygen.studio.buy_credits']()}</a>
                 </>
               )}
             </p>
@@ -787,9 +841,13 @@ function Studio() {
             open={authOpen}
             onOpenChange={setAuthOpen}
             description={m['everygen.video.auth_description']()}
-            // Carry on straight to the video: the server answers with the
-            // paywall when the new account has no credits yet.
-            onSignedIn={() => videoMutation.mutate()}
+            // Carry on with what the visitor clicked: the server answers with
+            // the paywall when the new account has no credits yet.
+            onSignedIn={() => {
+              signedInRef.current = true;
+              if (authNextRef.current === 'poster') posterMutation.mutate();
+              else videoMutation.mutate();
+            }}
           />
         </Suspense>
       )}
@@ -1112,7 +1170,7 @@ export function EverygenFooter() {
           </nav>
           <nav aria-label={m['everygen.footer.links']()}>
             {PRICING_ENABLED && (
-              <Link href="/pricing">{m['everygen.nav.pricing']()}</Link>
+              <a href="/#pricing">{m['everygen.nav.pricing']()}</a>
             )}
             <Link href="/settings/videos">{m['everygen.nav.my_videos']()}</Link>
             <Link href="/privacy-policy">{m['everygen.footer.privacy']()}</Link>
@@ -1142,6 +1200,7 @@ export function EverygenPage() {
       <Studio />
       <Looks />
       <How />
+      {PRICING_ENABLED && <Pricing />}
       <Guide />
       <Cta />
       <Faq />

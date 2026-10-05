@@ -1104,6 +1104,7 @@
   "everygen.studio.style_label": "选择画面风格",
   "everygen.studio.style_hint": "围绕你构建场景",
   "everygen.studio.consent": "我拥有这张照片，或已获得照片中人物的使用许可。",
+  "everygen.studio.need_consent": "请先勾选照片授权：确认你拥有这张照片，或已获得照片中人物的许可。",
   "everygen.studio.generate": "生成视频",
   "everygen.studio.submitting": "正在开始生成",
   "everygen.studio.sign_in": "登录后创作",
@@ -1177,7 +1178,7 @@
   "everygen.guide.ready": "想看看自己的黄昏画面吗？",
   "everygen.guide.start": "打开 Raindance AI 创作区",
   "everygen.faq.length.q": "Raindance AI 视频有多长？",
-  "everygen.faq.length.a": "可选 5、10 或 15 秒，480p、720p 或 1080p，竖屏 9:16。处理时间取决于 AI 服务商队列；你可以在创作区查看进度，完成后在「我的视频」中再次打开。",
+  "everygen.faq.length.a": "可选 5、10 或 15 秒的 480p、720p，1080p 支持 5 秒和 10 秒，均为竖屏 9:16。处理时间取决于 AI 服务商队列；你可以在创作区查看进度，完成后在「我的视频」中再次打开。",
   "everygen.faq.share.q": "可以发布到 TikTok、Reels 或 Shorts 吗？",
   "everygen.faq.share.a": "可以。下载的是竖屏无声 MP4，可上传到这些应用。请在应用内选择音乐、添加字幕，遵守平台的 AI 内容和音乐规则，并确保你有权使用上传的照片。",
   "everygen.hero.frame_caption": "竖屏 9:16，时长 5 秒",
@@ -1233,5 +1234,6 @@
   "everygen.video.sign_in": "注册并生成视频",
   "everygen.video.locked": "先生成海报，再把它变成视频。",
   "everygen.video.auth_description": "注册并购买积分后，就能把这张海报变成视频。",
-  "everygen.video.hd_scene": "正在生成高清画面"
+  "everygen.video.hd_scene": "正在生成高清画面",
+  "everygen.studio.hd_limit": "1080p 仅支持 5 秒和 10 秒"
 }

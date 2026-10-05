@@ -77,7 +77,7 @@ function pack(
 }
 
 export const pricingCatalog: Record<string, PricingProduct> = {
-  pack_starter: pack('pack_starter', 'Starter Pack', 799, 540),
+  pack_starter: pack('pack_starter', 'Starter Pack', 999, 675),
   pack_standard: pack('pack_standard', 'Standard Pack', 1999, 1350),
   pack_pro: pack('pack_pro', 'Pro Pack', 3999, 2720),
   pack_studio: pack('pack_studio', 'Studio Pack', 7999, 5440),

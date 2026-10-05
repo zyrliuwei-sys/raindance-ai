@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   DURATIONS,
   everygenCredits,
+  isOffered,
   QUALITIES,
 } from '@/config/everygen-pricing';
 import { respData } from '@/lib/resp';
@@ -12,7 +13,8 @@ async function GET() {
   const prices: Record<string, number> = {};
   for (const duration of DURATIONS)
     for (const quality of QUALITIES)
-      prices[`${duration}-${quality}`] = everygenCredits(duration, quality);
+      if (isOffered(duration, quality))
+        prices[`${duration}-${quality}`] = everygenCredits(duration, quality);
   return respData({ credits: everygenCredits(), prices });
 }
 

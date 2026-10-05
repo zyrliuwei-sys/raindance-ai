@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { AIMediaType } from '@/core/ai';
 import { EvolinkClient } from '@/core/ai/evolink';
 import { getAuth } from '@/core/auth';
-import { everygenCredits } from '@/config/everygen-pricing';
+import { everygenCredits, isOffered } from '@/config/everygen-pricing';
 import { createTask, mergeTaskInfo } from '@/modules/ai-tasks/service';
 import { getAllConfigs } from '@/modules/config/service';
 import { getBalance } from '@/modules/credits/service';
@@ -53,6 +53,8 @@ async function POST({ request }: { request: Request }) {
     )
       return respErr('Poster not found');
     const options = parseVideoOptions(body);
+    if (!isOffered(options.duration, options.quality))
+      return respErr('1080p is available for 5 s and 10 s videos');
     const configs = await getAllConfigs();
     const admin = await hasPermission(session.user.id, 'admin.*');
     const price = everygenCredits(options.duration, options.quality);

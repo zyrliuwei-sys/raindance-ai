@@ -1104,6 +1104,7 @@
   "everygen.studio.style_label": "Choose your look",
   "everygen.studio.style_hint": "We build the scene around you",
   "everygen.studio.consent": "I own this photo or have permission from the person shown to use it.",
+  "everygen.studio.need_consent": "Please tick the box to confirm you own this photo or have permission to use it.",
   "everygen.studio.generate": "Generate video",
   "everygen.studio.submitting": "Starting generation",
   "everygen.studio.sign_in": "Sign in to create",
@@ -1177,7 +1178,7 @@
   "everygen.guide.ready": "Ready to see your photo at sunset?",
   "everygen.guide.start": "Open the Raindance AI studio",
   "everygen.faq.length.q": "How long is a Raindance AI video?",
-  "everygen.faq.length.a": "Choose 5, 10 or 15 seconds at 480p, 720p or 1080p, in vertical 9:16. Processing time depends on the AI provider queue; you can follow progress in the studio and reopen finished videos in My videos.",
+  "everygen.faq.length.a": "Choose 5, 10 or 15 seconds at 480p or 720p, or 5 and 10 seconds at 1080p, in vertical 9:16. Processing time depends on the AI provider queue; you can follow progress in the studio and reopen finished videos in My videos.",
   "everygen.faq.share.q": "Can I post the video to TikTok, Reels, or Shorts?",
   "everygen.faq.share.a": "Yes. The output is a vertical, silent MP4 that you can upload to those apps. Add music and captions in the app, follow its AI-content and music rules, and use only portraits you have permission to transform.",
   "everygen.hero.frame_caption": "Vertical 9:16, five seconds",
@@ -1233,5 +1234,6 @@
   "everygen.video.sign_in": "Sign up to make the video",
   "everygen.video.locked": "Make your poster first, then turn it into a video.",
   "everygen.video.auth_description": "Create an account and add credits to turn this poster into a video.",
-  "everygen.video.hd_scene": "Rendering your scene in HD"
+  "everygen.video.hd_scene": "Rendering your scene in HD",
+  "everygen.studio.hd_limit": "1080p is available for 5 s and 10 s videos"
 }

@@ -583,6 +583,10 @@
   color: var(--salt);
   border-color: oklch(0.955 0.014 82 / 0.3);
 }
+.eg-segment button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
 .eg-segment button.active {
   color: var(--salt);
   border-color: var(--sun);
@@ -1673,4 +1677,9 @@
 .eg-footer-badges {
   margin-top: 48px;
   opacity: 0.85;
+}
+
+/* Pricing section on the homepage: clear the fixed header when jumped to. */
+.eg-page #pricing {
+  scroll-margin-top: 68px;
 }
