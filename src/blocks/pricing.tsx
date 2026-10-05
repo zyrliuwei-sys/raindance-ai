@@ -1,14 +1,13 @@
 'use client';
 
 import { lazy, Suspense, useMemo, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import {
-  CalendarClock,
   Film,
   Infinity as InfinityIcon,
   MonitorPlay,
+  RotateCcw,
   Sparkles,
-  XCircle,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -16,7 +15,7 @@ import { useSession } from '@/core/auth/client';
 import { useRouter } from '@/core/i18n/navigation';
 import { EVERYGEN_CREDITS } from '@/config/everygen-pricing';
 import { pricingCatalog, qualifiesForFirstOrderBonus } from '@/config/pricing';
-import { apiGet, apiPost } from '@/lib/api-client';
+import { apiPost } from '@/lib/api-client';
 import { currentPathWithQuery } from '@/lib/redirect';
 import { track } from '@/lib/track';
 import { m } from '@/paraglide/messages.js';
@@ -78,13 +77,8 @@ export function Pricing({
     [configs]
   );
 
-  // Live per-video price so "≈ N videos" matches what generation charges.
-  const { data: priceData } = useQuery({
-    queryKey: ['everygen-price'],
-    queryFn: () => apiGet<{ credits: number }>('/api/everygen/price'),
-    staleTime: 10 * 60_000,
-  });
-  const perVideo = priceData?.credits ?? EVERYGEN_CREDITS;
+  // "≈ N videos" counts the default 5-second 720p video.
+  const perVideo = EVERYGEN_CREDITS;
 
   function features(credits: number, extra: PricingFeature[]) {
     return [
@@ -159,64 +153,36 @@ export function Pricing({
       icon: InfinityIcon,
       label: m['landing.pricing.feature_no_subscription'](),
     },
+    { icon: RotateCcw, label: m['landing.pricing.feature_refund']() },
   ];
-  const monthlyExtra = [
-    {
-      icon: CalendarClock,
-      label: m['landing.pricing.feature_monthly_refill'](),
-    },
-    { icon: XCircle, label: m['landing.pricing.feature_cancel']() },
-  ];
-  const tiers = [
-    ['basic', m['landing.pricing.basic'](), m['landing.pricing.basic_desc']()],
-    ['pro', m['landing.pricing.pro'](), m['landing.pricing.pro_desc']()],
-    [
-      'studio',
-      m['landing.pricing.studio'](),
-      m['landing.pricing.studio_desc'](),
-    ],
+  const packs = [
+    ['pack_starter', m['landing.pricing.pack_starter']()],
+    ['pack_standard', m['landing.pricing.pack_standard']()],
+    ['pack_pro', m['landing.pricing.pack_pro']()],
+    ['pack_studio', m['landing.pricing.pack_studio']()],
   ] as const;
 
   const groups: PricingGroup[] = [
-    // One-time is the tab shown by default (see defaultGroup below).
-    {
-      key: 'monthly',
-      label: m['landing.pricing.monthly'](),
-      plans: tiers.map(([tier, name, description]) =>
-        plan(`${tier}_monthly`, {
-          name,
-          description,
-          featured: tier === 'pro',
-          badge: tier === 'pro' ? m['landing.pricing.popular']() : undefined,
-          extra: monthlyExtra,
-        })
-      ),
-    },
     {
       key: 'one-time',
       label: m['landing.pricing.one_time'](),
-      plans: [
-        plan('pack_starter', {
-          name: m['landing.pricing.pack_starter'](),
+      plans: packs.map(([productId, name]) =>
+        plan(productId, {
+          name,
           description: m['landing.pricing.pack_desc'](),
-          // The first-order bonus shows on every card; keep the orange ring
-          // for the featured plans.
-          plainFrame: true,
+          featured: productId === 'pack_standard',
+          // The first-order bonus banner shows on every qualifying pack;
+          // keep the orange ring for the featured one.
+          plainFrame: productId !== 'pack_standard',
+          badge:
+            productId === 'pack_standard'
+              ? m['landing.pricing.popular']()
+              : productId === 'pack_studio'
+                ? m['landing.pricing.best_value']()
+                : undefined,
           extra: packExtra,
-        }),
-        plan('pack_standard', {
-          name: m['landing.pricing.pack_standard'](),
-          description: m['landing.pricing.pack_desc'](),
-          featured: true,
-          badge: m['landing.pricing.popular'](),
-          extra: packExtra,
-        }),
-        plan('pack_pro', {
-          name: m['landing.pricing.pack_pro'](),
-          description: m['landing.pricing.pack_desc'](),
-          extra: packExtra,
-        }),
-      ],
+        })
+      ),
     },
   ];
 
@@ -305,7 +271,7 @@ export function Pricing({
       id={dialog ? undefined : 'pricing'}
       className={dialog ? undefined : 'px-4 py-24 sm:py-32'}
     >
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         <div className={dialog ? 'mb-8 pr-8 text-center' : 'mb-16 text-center'}>
           {!dialog && (
             <p className="text-primary mb-5 font-mono text-[11px] tracking-[0.22em] uppercase">

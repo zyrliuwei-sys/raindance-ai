@@ -1,13 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { FalProvider } from '@/core/ai';
+import { EvolinkClient } from '@/core/ai/evolink';
 import { envConfigs } from '@/config';
 import { AITaskStatus, listTasksByStatus } from '@/modules/ai-tasks/service';
 import { getAllConfigs } from '@/modules/config/service';
+import { listPendingPosters } from '@/modules/everygen-poster/service';
 import { respData, respErr } from '@/lib/resp';
 
 import {
   advance,
+  advancePoster,
   failTimedOut,
   PIPELINE_MODEL,
   repersistTask,
@@ -18,9 +20,21 @@ async function POST({ request }: { request: Request }) {
   if (!secret || request.headers.get('x-cron-key') !== secret)
     return respErr('Unauthorized');
   const configs = await getAllConfigs();
-  if (!configs.fal_api_key) return respData({ skipped: true });
-  const provider = new FalProvider({ apiKey: configs.fal_api_key });
-  const stats = { advanced: 0, timedOut: 0, persisted: 0 };
+  if (!configs.evolink_api_key) return respData({ skipped: true });
+  const provider = new EvolinkClient({
+    apiKey: configs.evolink_api_key,
+    baseUrl: configs.evolink_base_url,
+  });
+  const stats = { advanced: 0, timedOut: 0, persisted: 0, posters: 0 };
+  // Settle posters whose visitor closed the tab, so the image still lands on R2.
+  for (const poster of await listPendingPosters(25)) {
+    try {
+      await advancePoster(poster, provider);
+      stats.posters++;
+    } catch (error) {
+      console.error('Everygen cron poster failed', poster.id, error);
+    }
+  }
   const active = await listTasksByStatus({
     model: PIPELINE_MODEL,
     statuses: [AITaskStatus.PENDING, AITaskStatus.PROCESSING],
@@ -42,7 +56,8 @@ async function POST({ request }: { request: Request }) {
   const unsaved = await listTasksByStatus({
     model: PIPELINE_MODEL,
     statuses: [AITaskStatus.SUCCESS],
-    resultLike: '%fal.media%',
+    // Evolink result files are temporary; copy them to R2 when configured.
+    resultLike: '%files.evolink.ai%',
     infoNotLike: '%"persistAttempts":3%',
     limit: 3,
   });

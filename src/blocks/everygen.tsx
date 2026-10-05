@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -17,15 +17,32 @@ import { toast } from 'sonner';
 import { useSession } from '@/core/auth/client';
 import { Link } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
+import {
+  DEFAULT_DURATION,
+  DEFAULT_QUALITY,
+  DURATIONS,
+  everygenCredits,
+  QUALITIES,
+  type Duration,
+  type Quality,
+} from '@/config/everygen-pricing';
 import { GUIDE_PATHS, type GuidePath } from '@/config/guides';
 import { PRICING_ENABLED } from '@/config/pricing';
 import { apiGet, apiPost } from '@/lib/api-client';
 import { draftGet, draftSet } from '@/lib/draft-store';
+import { track } from '@/lib/track';
 import { m } from '@/paraglide/messages.js';
 import { FooterBadgeList } from '@/components/footer-badge-list';
 import { SiteUserMenu } from '@/components/site-user-menu';
 
 import '@/styles/everygen.css';
+
+// Loaded only once a generation is refused for lack of credits.
+const PaywallDialog = lazy(() => import('@/blocks/paywall-dialog'));
+const AuthDialog = lazy(() => import('@/blocks/auth-dialog'));
+const INSUFFICIENT_CREDITS = 'Insufficient credits';
+const FREE_POSTER_USED = 'FREE_PREVIEW_USED';
+const FREE_POSTER_PAUSED = 'FREE_PREVIEW_PAUSED';
 
 const frames = {
   pier: '/imgs/generated/raindance-pier-look.jpg',
@@ -35,6 +52,13 @@ const frames = {
 const heroFrame = '/imgs/generated/raindance-pier-hero.jpg';
 const duskVideo = '/videos/everygen-sunset-pier.mp4';
 const DRAFT_KEY = 'everygen-photo-draft';
+
+type Poster = {
+  id: string;
+  status: 'pending' | 'success' | 'failed';
+  imageUrl?: string | null;
+  error?: string | null;
+};
 
 type Task = {
   id: string;
@@ -217,20 +241,50 @@ function Studio() {
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [style, setStyle] = useState<Style>('pier');
+  const [duration, setDuration] = useState<Duration>(DEFAULT_DURATION);
+  const [quality, setQuality] = useState<Quality>(DEFAULT_QUALITY);
+  const [audio, setAudio] = useState(false);
   const [consent, setConsent] = useState(false);
+  const [posterId, setPosterId] = useState<string | null>(null);
   const [taskId, setTaskId] = useState<string | null>(null);
   const [draftReady, setDraftReady] = useState(false);
+  const [paywall, setPaywall] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  // Mount the lazy dialogs on first open and keep them mounted for their
+  // close animation.
+  const [paywallMounted, setPaywallMounted] = useState(false);
+  if (paywall && !paywallMounted) setPaywallMounted(true);
+  const [authMounted, setAuthMounted] = useState(false);
+  if (authOpen && !authMounted) setAuthMounted(true);
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
+  const credits = everygenCredits(duration, quality);
 
+  // The draft (photo, poster, chosen options) survives sign-in redirects and
+  // the trip to checkout, so a returning buyer lands on their own poster.
   useEffect(() => {
     let active = true;
-    draftGet<{ photo: File | null; style: Style; consent: boolean }>(
-      DRAFT_KEY
-    ).then((draft) => {
+    draftGet<{
+      photo: File | null;
+      style: Style;
+      duration: Duration;
+      quality: Quality;
+      audio: boolean;
+      consent: boolean;
+      posterId: string | null;
+      taskId: string | null;
+    }>(DRAFT_KEY).then((draft) => {
       if (!active) return;
       if (draft?.photo) setPhoto(draft.photo);
       if (draft?.style && styles.includes(draft.style)) setStyle(draft.style);
+      if (draft?.duration && DURATIONS.includes(draft.duration))
+        setDuration(draft.duration);
+      if (draft?.quality && QUALITIES.includes(draft.quality))
+        setQuality(draft.quality);
+      if (draft?.audio) setAudio(true);
       if (draft?.consent) setConsent(true);
+      if (draft?.posterId) setPosterId(draft.posterId);
+      if (draft?.taskId) setTaskId(draft.taskId);
       setDraftReady(true);
     });
     return () => {
@@ -238,8 +292,28 @@ function Studio() {
     };
   }, []);
   useEffect(() => {
-    if (draftReady) void draftSet(DRAFT_KEY, { photo, style, consent });
-  }, [draftReady, photo, style, consent]);
+    if (draftReady)
+      void draftSet(DRAFT_KEY, {
+        photo,
+        style,
+        duration,
+        quality,
+        audio,
+        consent,
+        posterId,
+        taskId,
+      });
+  }, [
+    draftReady,
+    photo,
+    style,
+    duration,
+    quality,
+    audio,
+    consent,
+    posterId,
+    taskId,
+  ]);
 
   useEffect(() => {
     if (!photo) {
@@ -251,26 +325,80 @@ function Studio() {
     return () => URL.revokeObjectURL(url);
   }, [photo]);
 
-  const mutation = useMutation({
+  const quota = useQuery({
+    queryKey: ['everygen-poster-quota', session?.user?.id ?? null],
+    queryFn: () =>
+      apiGet<{ left: number; reason: string | null }>('/api/everygen/poster'),
+    staleTime: 60_000,
+  });
+  const posterMutation = useMutation({
     mutationFn: async () => {
       if (!photo) throw new Error(m['everygen.studio.need_photo']());
       const photoData = await fileToDataUrl(photo);
-      return apiPost<Task>('/api/everygen/generate', {
+      return apiPost<Poster>('/api/everygen/poster', {
         photo: photoData,
         style,
         consent,
       });
     },
+    onSuccess: (created) => {
+      setPosterId(created.id);
+      setTaskId(null);
+      queryClient.setQueryData(['everygen-poster', created.id], created);
+      queryClient.invalidateQueries({ queryKey: ['everygen-poster-quota'] });
+      track('poster_start', { style });
+    },
+    onError: (error: Error) => {
+      queryClient.invalidateQueries({ queryKey: ['everygen-poster-quota'] });
+      toast.error(
+        error.message === FREE_POSTER_USED
+          ? m['everygen.poster.used']()
+          : error.message === FREE_POSTER_PAUSED
+            ? m['everygen.poster.paused']()
+            : error.message
+      );
+    },
+  });
+  const poster = useQuery({
+    queryKey: ['everygen-poster', posterId],
+    queryFn: () =>
+      apiGet<Poster>(
+        `/api/everygen/poster?id=${encodeURIComponent(posterId!)}`
+      ),
+    enabled: !!posterId,
+    refetchInterval: (query) =>
+      query.state.data?.status === 'pending' ? 3000 : false,
+  });
+
+  const videoMutation = useMutation({
+    mutationFn: () =>
+      apiPost<Task>('/api/everygen/generate', {
+        posterId,
+        duration,
+        quality,
+        audio,
+      }),
     onSuccess: (task) => {
       setTaskId(task.id);
+      queryClient.setQueryData(['everygen-task', task.id], task);
       toast.success(m['everygen.studio.started']());
+      queryClient.invalidateQueries({ queryKey: ['credits-balance'] });
+      track('video_start', { duration, quality });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => {
+      // Server is the source of truth: out of credits → show the packs.
+      if (error.message === INSUFFICIENT_CREDITS) {
+        track('paywall_open', { from: 'studio' });
+        setPaywall(true);
+      } else if (error.message === 'Unauthorized') setAuthOpen(true);
+      else toast.error(error.message);
+    },
   });
-  const price = useQuery({
-    queryKey: ['everygen-price'],
-    queryFn: () => apiGet<{ credits: number }>('/api/everygen/price'),
-    staleTime: 10 * 60_000,
+  const balance = useQuery({
+    queryKey: ['credits-balance'],
+    queryFn: () => apiGet<{ balance: number }>('/api/credits'),
+    enabled: !!session?.user,
+    staleTime: 30_000,
   });
   const task = useQuery({
     queryKey: ['everygen-task', taskId],
@@ -283,6 +411,23 @@ function Studio() {
     },
   });
   const result = task.data;
+  // A failed task refunds its credits — refresh the shown balance.
+  useEffect(() => {
+    if (result?.status === 'failed')
+      queryClient.invalidateQueries({ queryKey: ['credits-balance'] });
+  }, [result?.status, queryClient]);
+
+  const posterData = poster.data;
+  const posterReady = posterData?.status === 'success' && !!posterData.imageUrl;
+  const videoBusy =
+    videoMutation.isPending ||
+    result?.status === 'pending' ||
+    result?.status === 'processing';
+
+  function resetOutputs() {
+    setPosterId(null);
+    setTaskId(null);
+  }
 
   function selectFile(file?: File) {
     if (!file) return;
@@ -295,8 +440,20 @@ function Studio() {
       return;
     }
     setPhoto(file);
-    setTaskId(null);
+    resetOutputs();
   }
+
+  function startVideo() {
+    if (!posterReady) return;
+    if (!session?.user) {
+      track('auth_dialog_open', { from: 'studio' });
+      setAuthOpen(true);
+      return;
+    }
+    videoMutation.mutate();
+  }
+
+  const quotaUsed = !session?.user && quota.data?.left === 0;
 
   return (
     <section id="create" className="eg-create eg-shell">
@@ -307,6 +464,7 @@ function Studio() {
       </div>
       <div className="eg-studio-grid">
         <div className="eg-studio-form">
+          <p className="eg-step">{m['everygen.poster.step']()}</p>
           <div className="eg-field-heading">
             <span>{m['everygen.studio.photo_label']()}</span>
             <span>{m['everygen.studio.photo_hint']()}</span>
@@ -349,6 +507,7 @@ function Studio() {
               className="eg-file-remove"
               onClick={() => {
                 setPhoto(null);
+                resetOutputs();
                 if (inputRef.current) inputRef.current.value = '';
               }}
             >
@@ -392,43 +551,142 @@ function Studio() {
             />
             <span>{m['everygen.studio.consent']()}</span>
           </label>
-          {session?.user ? (
+          <button
+            type="button"
+            className="eg-button eg-submit"
+            disabled={
+              !photo ||
+              !consent ||
+              posterMutation.isPending ||
+              posterData?.status === 'pending' ||
+              quotaUsed
+            }
+            onClick={() => posterMutation.mutate()}
+          >
+            {posterMutation.isPending || posterData?.status === 'pending' ? (
+              <Loader2 size={18} className="animate-spin" />
+            ) : (
+              <ImagePlus size={18} />
+            )}
+            {posterData
+              ? m['everygen.poster.again']()
+              : m['everygen.poster.cta']()}
+            <span className="eg-free-tag">{m['everygen.poster.free']()}</span>
+          </button>
+          <p className="eg-studio-note">
+            {quotaUsed
+              ? m['everygen.poster.used']()
+              : m['everygen.poster.note']()}
+          </p>
+
+          <div className={`eg-video-step ${posterReady ? '' : 'is-locked'}`}>
+            <p className="eg-step">{m['everygen.video.step']()}</p>
+            <div className="eg-options">
+              <div>
+                <div className="eg-field-heading">
+                  <span>{m['everygen.studio.length_label']()}</span>
+                </div>
+                <div
+                  className="eg-segment"
+                  role="group"
+                  aria-label={m['everygen.studio.length_label']()}
+                >
+                  {DURATIONS.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      aria-pressed={duration === item}
+                      className={duration === item ? 'active' : ''}
+                      onClick={() => setDuration(item)}
+                    >
+                      {m['everygen.studio.seconds']({ count: item })}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="eg-field-heading">
+                  <span>{m['everygen.studio.quality_label']()}</span>
+                </div>
+                <div
+                  className="eg-segment"
+                  role="group"
+                  aria-label={m['everygen.studio.quality_label']()}
+                >
+                  {QUALITIES.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      aria-pressed={quality === item}
+                      className={quality === item ? 'active' : ''}
+                      onClick={() => setQuality(item)}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <label className="eg-consent eg-audio">
+              <input
+                type="checkbox"
+                checked={audio}
+                onChange={(e) => setAudio(e.target.checked)}
+              />
+              <span>{m['everygen.studio.audio']()}</span>
+            </label>
+            <div className="eg-cost">
+              <span>
+                {m['everygen.studio.cost_label']()}
+                {balance.data &&
+                  ` · ${m['everygen.studio.balance']({ credits: Math.floor(balance.data.balance).toLocaleString('en-US') })}`}
+              </span>
+              <strong>
+                {m['everygen.studio.credits']({
+                  credits: credits.toLocaleString('en-US'),
+                })}
+              </strong>
+            </div>
             <button
               type="button"
               className="eg-button eg-submit"
-              disabled={!photo || !consent || mutation.isPending}
-              onClick={() => mutation.mutate()}
+              disabled={!posterReady || videoBusy}
+              onClick={startVideo}
             >
-              {mutation.isPending ? (
+              {videoBusy ? (
                 <Loader2 size={18} className="animate-spin" />
               ) : (
                 <Film size={18} />
               )}
-              {mutation.isPending
+              {videoMutation.isPending
                 ? m['everygen.studio.submitting']()
-                : m['everygen.studio.generate']()}
+                : session?.user
+                  ? m['everygen.studio.generate']()
+                  : m['everygen.video.sign_in']()}
               <ArrowRight size={18} />
             </button>
-          ) : (
-            <Link
-              href="/sign-in?callbackUrl=%2F%23create"
-              className="eg-button eg-submit"
-            >
-              {m['everygen.studio.sign_in']()}
-              <ArrowRight size={18} />
-            </Link>
-          )}
-          <p className="eg-studio-note">
-            {price.data
-              ? m['everygen.studio.cost']({ credits: price.data.credits })
-              : ''}
-          </p>
+            <p className="eg-studio-note">
+              {posterReady
+                ? m['everygen.studio.refund_note']()
+                : m['everygen.video.locked']()}
+              {PRICING_ENABLED && (
+                <>
+                  {' '}
+                  <Link href="/pricing">
+                    {m['everygen.studio.buy_credits']()}
+                  </Link>
+                </>
+              )}
+            </p>
+          </div>
           <p className="eg-studio-note">{m['everygen.studio.music_note']()}</p>
         </div>
         <div className="eg-studio-result">
           <div className="eg-monitor-bar" aria-hidden="true">
             <span>{m['everygen.studio.monitor']()}</span>
-            <span>9:16</span>
+            <span>
+              9:16 · {taskId ? `${quality} · ${duration}s` : 'poster'}
+            </span>
           </div>
           {result?.status === 'success' && result.videoUrl ? (
             <>
@@ -468,23 +726,73 @@ function Studio() {
                 <Loader2 size={30} className="animate-spin" />
               )}
               <strong>
-                {result.stage === 'video'
-                  ? m['everygen.studio.animating']()
-                  : m['everygen.studio.composing']()}
+                {result.stage === 'scene'
+                  ? m['everygen.video.hd_scene']()
+                  : m['everygen.studio.animating']()}
               </strong>
               <p>{m['everygen.studio.wait']()}</p>
+            </div>
+          ) : posterReady ? (
+            <>
+              <img
+                src={posterData.imageUrl!}
+                alt={m['everygen.poster.alt']()}
+                width="576"
+                height="1024"
+                className="eg-result-video eg-poster-image"
+              />
+              <a
+                className="eg-download"
+                href={`/api/everygen/poster-download?id=${posterData.id}`}
+              >
+                <Download size={17} />
+                {m['everygen.poster.download']()}
+              </a>
+            </>
+          ) : posterData?.status === 'failed' ? (
+            <div className="eg-result-empty">
+              <X size={30} />
+              <strong>{m['everygen.poster.failed']()}</strong>
+              <p>{m['everygen.poster.try_again']()}</p>
+            </div>
+          ) : posterData || posterMutation.isPending ? (
+            <div className="eg-result-empty">
+              <Loader2 size={30} className="animate-spin" />
+              <strong>{m['everygen.studio.composing']()}</strong>
+              <p>{m['everygen.poster.wait']()}</p>
             </div>
           ) : (
             <div className="eg-result-empty">
               <div className="eg-result-icon">
                 <ImagePlus size={34} strokeWidth={1.3} />
               </div>
-              <strong>{m['everygen.studio.preview_title']()}</strong>
-              <p>{m['everygen.studio.preview_description']()}</p>
+              <strong>{m['everygen.poster.preview_title']()}</strong>
+              <p>{m['everygen.poster.preview_description']()}</p>
             </div>
           )}
         </div>
       </div>
+      {paywallMounted && (
+        <Suspense fallback={null}>
+          <PaywallDialog
+            open={paywall}
+            onOpenChange={setPaywall}
+            title={m['everygen.paywall.title']()}
+          />
+        </Suspense>
+      )}
+      {authMounted && (
+        <Suspense fallback={null}>
+          <AuthDialog
+            open={authOpen}
+            onOpenChange={setAuthOpen}
+            description={m['everygen.video.auth_description']()}
+            // Carry on straight to the video: the server answers with the
+            // paywall when the new account has no credits yet.
+            onSignedIn={() => videoMutation.mutate()}
+          />
+        </Suspense>
+      )}
     </section>
   );
 }

@@ -15,7 +15,7 @@ import { PaymentInterval, PaymentType } from '@/core/payment/types';
  * every link to it (site header/footer, settings billing/credits) is hidden.
  * Checkout itself is untouched, so flip this back to true to relaunch.
  */
-export const PRICING_ENABLED = false;
+export const PRICING_ENABLED = true;
 
 export type PricingPlanInfo = {
   name: string;
@@ -37,104 +37,50 @@ export type PricingProduct = {
 };
 
 /**
- * Raindance AI catalog. A short video costs a fixed number of credits
- * (see ./hotel-lobby-pricing.ts — 440 at the default 8s reference video), and
- * every pack holds a whole number of videos.
+ * Raindance AI catalog: four one-time credit packs, no subscriptions.
  *
- * Pricing floor: no product may sell credits below $0.01 each, so every
- * video is sold at ≥ 7× its fal cost. That is why there are no discounted
- * yearly plans — check priceInCents / credits ≥ 0.01 before adding a product.
+ * 1 credit = 1 Evolink credit, and videos are charged at 7× their Evolink
+ * cost (see ./everygen-pricing.ts). Pricing floor: no pack may sell a credit
+ * below Evolink's $0.0147, or the 7× margin shrinks — check
+ * priceInCents / credits ≥ 1.47 before adding or changing a product.
  * Keys MUST match what the pricing UI sends as product_id.
  */
+export const USD_CENTS_PER_CREDIT_FLOOR = 1.47;
+
 /**
- * First-order bonus (one short video's worth of credits), granted once per
- * user on their first paid order — any product, pack or monthly plan, from
- * the $9.90 starter pack up.
+ * First-order bonus (credits for one 5 s 480p video), granted once per user
+ * on their first paid order of the Standard pack ($19.99) or larger — a
+ * reason to pick the bigger pack, not a free trial.
  */
-export const FIRST_ORDER_BONUS_MIN_CENTS = 990;
+export const FIRST_ORDER_BONUS_MIN_CENTS = 1999;
 
 export function qualifiesForFirstOrderBonus(order: { priceInCents: number }) {
   return order.priceInCents >= FIRST_ORDER_BONUS_MIN_CENTS;
 }
 
+function pack(
+  productId: string,
+  productName: string,
+  priceInCents: number,
+  credits: number
+): PricingProduct {
+  return {
+    productId,
+    productName,
+    planName: productName,
+    description: productName,
+    type: PaymentType.ONE_TIME,
+    priceInCents,
+    currency: 'usd',
+    credits,
+  };
+}
+
 export const pricingCatalog: Record<string, PricingProduct> = {
-  pack_starter: {
-    productId: 'pack_starter',
-    productName: 'Starter Pack',
-    planName: 'Starter Pack',
-    description: 'Starter Pack',
-    type: PaymentType.ONE_TIME,
-    // $9.90 for two 8 s videos (≈ 7× fal cost after PayPal fees); was
-    // $5 / 440 until 2026-10-03 — compare paid starter orders per day.
-    priceInCents: 990,
-    currency: 'usd',
-    credits: 880,
-  },
-  pack_standard: {
-    productId: 'pack_standard',
-    productName: 'Standard Pack',
-    planName: 'Standard Pack',
-    description: 'Standard Pack',
-    type: PaymentType.ONE_TIME,
-    priceInCents: 2300,
-    currency: 'usd',
-    credits: 2200,
-  },
-  pack_pro: {
-    productId: 'pack_pro',
-    productName: 'Pro Pack',
-    planName: 'Pro Pack',
-    description: 'Pro Pack',
-    type: PaymentType.ONE_TIME,
-    priceInCents: 4400,
-    currency: 'usd',
-    credits: 4400,
-  },
-  basic_monthly: {
-    productId: 'basic_monthly',
-    productName: 'Basic',
-    planName: 'Basic Monthly',
-    description: 'Basic Monthly',
-    type: PaymentType.SUBSCRIPTION,
-    priceInCents: 2300,
-    currency: 'usd',
-    credits: 2200,
-    plan: {
-      name: 'Basic',
-      interval: PaymentInterval.MONTH,
-      intervalCount: 1,
-    },
-  },
-  pro_monthly: {
-    productId: 'pro_monthly',
-    productName: 'Pro',
-    planName: 'Pro Monthly',
-    description: 'Pro Monthly',
-    type: PaymentType.SUBSCRIPTION,
-    priceInCents: 4400,
-    currency: 'usd',
-    credits: 4400,
-    plan: {
-      name: 'Pro',
-      interval: PaymentInterval.MONTH,
-      intervalCount: 1,
-    },
-  },
-  studio_monthly: {
-    productId: 'studio_monthly',
-    productName: 'Studio',
-    planName: 'Studio Monthly',
-    description: 'Studio Monthly',
-    type: PaymentType.SUBSCRIPTION,
-    priceInCents: 8800,
-    currency: 'usd',
-    credits: 8800,
-    plan: {
-      name: 'Studio',
-      interval: PaymentInterval.MONTH,
-      intervalCount: 1,
-    },
-  },
+  pack_starter: pack('pack_starter', 'Starter Pack', 799, 540),
+  pack_standard: pack('pack_standard', 'Standard Pack', 1999, 1350),
+  pack_pro: pack('pack_pro', 'Pro Pack', 3999, 2720),
+  pack_studio: pack('pack_studio', 'Studio Pack', 7999, 5440),
 };
 
 export function getPricingProduct(productId: string): PricingProduct | null {

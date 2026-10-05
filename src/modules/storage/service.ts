@@ -1,4 +1,8 @@
 import { R2Provider, StorageManager } from '@/core/storage';
+import {
+  R2BindingProvider,
+  type R2BucketBinding,
+} from '@/core/storage/r2-binding';
 import { getAllConfigs, type ConfigMap } from '@/modules/config/service';
 
 /**
@@ -30,8 +34,23 @@ function buildManager(configs: ConfigMap): StorageManager {
   return manager;
 }
 
+/**
+ * On Workers, a `MEDIA` R2 bucket binding plus a `MEDIA_PUBLIC_URL` var
+ * (wrangler.jsonc) is used ahead of the admin S3-key settings.
+ */
+function bindingManager(): StorageManager | null {
+  const g = globalThis as any;
+  const env = g.__CF_ENV__ ?? g.__env__;
+  const bucket = env?.MEDIA as R2BucketBinding | undefined;
+  const publicDomain = env?.MEDIA_PUBLIC_URL as string | undefined;
+  if (!bucket || !publicDomain) return null;
+  const manager = new StorageManager();
+  manager.addProvider(new R2BindingProvider({ bucket, publicDomain }), true);
+  return manager;
+}
+
 export async function isStorageConfigured(): Promise<boolean> {
-  return isConfigured(await getAllConfigs());
+  return !!bindingManager() || isConfigured(await getAllConfigs());
 }
 
 /**
@@ -39,6 +58,8 @@ export async function isStorageConfigured(): Promise<boolean> {
  * (caller should fall back to local/inline handling).
  */
 export async function getStorage(): Promise<StorageManager | null> {
+  const binding = bindingManager();
+  if (binding) return binding;
   const configs = await getAllConfigs();
   if (!isConfigured(configs)) return null;
   return buildManager(configs);

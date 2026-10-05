@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { FalProvider } from '@/core/ai';
+import { EvolinkClient } from '@/core/ai/evolink';
 import { getAuth } from '@/core/auth';
 import { AITaskStatus, findTask } from '@/modules/ai-tasks/service';
 import { getAllConfigs } from '@/modules/config/service';
@@ -29,9 +29,16 @@ async function GET({ request }: { request: Request }) {
     )
       return respData(taskView(task));
     const configs = await getAllConfigs();
-    if (!configs.fal_api_key) return respErr('Generation is not configured');
+    if (!configs.evolink_api_key)
+      return respErr('Generation is not configured');
     return respData(
-      await advance(id, new FalProvider({ apiKey: configs.fal_api_key }))
+      await advance(
+        id,
+        new EvolinkClient({
+          apiKey: configs.evolink_api_key,
+          baseUrl: configs.evolink_base_url,
+        })
+      )
     );
   } catch (error: any) {
     return respErr(error?.message || 'Query failed');

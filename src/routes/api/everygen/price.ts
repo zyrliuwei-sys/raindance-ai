@@ -1,19 +1,19 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { resolveEverygenCredits } from '@/config/everygen-pricing';
-import { getAllConfigs } from '@/modules/config/service';
-import { respData, respErr } from '@/lib/resp';
+import {
+  DURATIONS,
+  everygenCredits,
+  QUALITIES,
+} from '@/config/everygen-pricing';
+import { respData } from '@/lib/resp';
 
+// Credits for every duration × resolution, e.g. { "5-720p": 481 }.
 async function GET() {
-  try {
-    return respData({
-      credits: resolveEverygenCredits(await getAllConfigs()),
-      duration: 5,
-      audio: false,
-    });
-  } catch (error: any) {
-    return respErr(error?.message || 'Internal error');
-  }
+  const prices: Record<string, number> = {};
+  for (const duration of DURATIONS)
+    for (const quality of QUALITIES)
+      prices[`${duration}-${quality}`] = everygenCredits(duration, quality);
+  return respData({ credits: everygenCredits(), prices });
 }
 
 export const Route = createFileRoute('/api/everygen/price')({

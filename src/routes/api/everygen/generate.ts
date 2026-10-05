@@ -1,56 +1,34 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { AIMediaType, FalProvider } from '@/core/ai';
+import { AIMediaType } from '@/core/ai';
+import { EvolinkClient } from '@/core/ai/evolink';
 import { getAuth } from '@/core/auth';
-import { resolveEverygenCredits } from '@/config/everygen-pricing';
+import { everygenCredits } from '@/config/everygen-pricing';
 import { createTask, mergeTaskInfo } from '@/modules/ai-tasks/service';
 import { getAllConfigs } from '@/modules/config/service';
 import { getBalance } from '@/modules/credits/service';
+import {
+  assignPosterUser,
+  findPoster,
+  PosterStatus,
+} from '@/modules/everygen-poster/service';
 import { hasPermission } from '@/modules/rbac/service';
 import { enforceMinIntervalRateLimit } from '@/lib/rate-limit';
 import { respData, respErr } from '@/lib/resp';
 
 import {
   failSubmission,
-  IMAGE_MODEL,
-  parseInput,
+  parseVideoOptions,
   PIPELINE_MODEL,
   scenePrompt,
+  STYLES,
+  submitHdScene,
   taskView,
+  type Style,
 } from './-pipeline';
 
-const MAX_REQUEST_BYTES = 8 * 1024 * 1024;
-
-async function readInput(request: Request): Promise<unknown> {
-  const declared = Number(request.headers.get('content-length'));
-  if (declared > MAX_REQUEST_BYTES) throw new Error('Photo is too large');
-  const reader = request.body?.getReader();
-  if (!reader) throw new Error('Photo is required');
-  const chunks: Uint8Array[] = [];
-  let length = 0;
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    length += value.byteLength;
-    if (length > MAX_REQUEST_BYTES) {
-      await reader.cancel();
-      throw new Error('Photo is too large');
-    }
-    chunks.push(value);
-  }
-  const bytes = new Uint8Array(length);
-  let offset = 0;
-  for (const chunk of chunks) {
-    bytes.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
-  try {
-    return JSON.parse(new TextDecoder().decode(bytes));
-  } catch {
-    throw new Error('Invalid photo request');
-  }
-}
-
+// Paid step: re-render a free poster at 2K, then animate it with Seedance
+// (advance() starts the video once the HD image is ready).
 async function POST({ request }: { request: Request }) {
   try {
     const session = await getAuth().api.getSession({
@@ -63,62 +41,60 @@ async function POST({ request }: { request: Request }) {
       extraKey: session.user.id,
     });
     if (limited) return limited;
-    const body = await readInput(request);
-    if (body?.consent !== true) return respErr('Photo consent is required');
-    const input = parseInput(body);
-    if (!input)
-      return respErr('A JPG, PNG or WebP portrait under 6 MB is required');
+    const body = await request.json().catch(() => null);
+    const posterId = (body as any)?.posterId;
+    const poster =
+      typeof posterId === 'string' ? await findPoster(posterId) : undefined;
+    if (
+      !poster ||
+      poster.status !== PosterStatus.SUCCESS ||
+      !poster.imageUrl ||
+      (poster.userId && poster.userId !== session.user.id)
+    )
+      return respErr('Poster not found');
+    const options = parseVideoOptions(body);
     const configs = await getAllConfigs();
     const admin = await hasPermission(session.user.id, 'admin.*');
-    const price = resolveEverygenCredits(configs);
+    const price = everygenCredits(options.duration, options.quality);
     if (!admin && (await getBalance(session.user.id)) < price)
       return respErr('Insufficient credits');
-    if (!configs.fal_api_key) return respErr('Generation is not configured');
+    if (!configs.evolink_api_key)
+      return respErr('Generation is not configured');
 
+    if (!poster.userId) await assignPosterUser(poster.id, session.user.id);
+    const style = (
+      STYLES.includes(poster.style as Style) ? poster.style : 'pier'
+    ) as Style;
     const task = await createTask({
       userId: session.user.id,
       mediaType: AIMediaType.VIDEO,
-      provider: 'fal',
+      provider: 'evolink',
       model: PIPELINE_MODEL,
-      prompt: scenePrompt(input.style),
+      prompt: scenePrompt(style),
       costCredits: admin ? 0 : price,
     });
     try {
-      const provider = new FalProvider({ apiKey: configs.fal_api_key });
-      const image = await provider.generate({
-        params: {
-          mediaType: AIMediaType.IMAGE,
-          model: IMAGE_MODEL,
-          prompt: scenePrompt(input.style),
-          options: {
-            image_urls: [input.photo],
-            image_size: { width: 576, height: 1024 },
-            quality: 'medium',
-            output_format: 'jpeg',
-          },
-        },
-      });
+      const imageRequestId = await submitHdScene(
+        new EvolinkClient({
+          apiKey: configs.evolink_api_key,
+          baseUrl: configs.evolink_base_url,
+        }),
+        { ...poster, imageUrl: poster.imageUrl }
+      );
       await mergeTaskInfo(task.id, {
-        imageRequestId: image.taskId,
-        style: input.style,
+        imageRequestId,
+        posterId: poster.id,
+        posterImageUrl: poster.imageUrl,
+        style,
+        ...options,
       });
     } catch (error) {
-      console.error('Raindance scene submission failed', task.id, error);
-      await failSubmission(task.id, 'Scene submission failed');
-      return respErr('Scene submission failed');
+      console.error('Raindance video submission failed', task.id, error);
+      await failSubmission(task.id, 'Video submission failed');
+      return respErr('Video submission failed');
     }
-    return respData(taskView(task));
+    return respData({ ...taskView(task), sceneImageUrl: poster.imageUrl });
   } catch (error) {
-    if (
-      error instanceof Error &&
-      [
-        'Photo is too large',
-        'Photo is required',
-        'Invalid photo request',
-        'Insufficient credits',
-      ].includes(error.message)
-    )
-      return respErr(error.message);
     console.error('Raindance generation failed', error);
     return respErr('Generation failed');
   }

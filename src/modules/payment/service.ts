@@ -19,7 +19,7 @@ import {
   type PaymentOrder,
 } from '@/core/payment/types';
 import { credit, order, subscription } from '@/config/db/schema';
-import { resolveDuetCredits } from '@/config/hotel-lobby-pricing';
+import { everygenCredits } from '@/config/everygen-pricing';
 import { qualifiesForFirstOrderBonus } from '@/config/pricing';
 import { getAllConfigs } from '@/modules/config/service';
 import { calculateCreditExpirationTime } from '@/modules/credits/service';
@@ -467,8 +467,8 @@ async function handleCheckoutSuccess(session: any, provider: string) {
         });
       }
 
-      // 3. First paid order (any product): bonus credits worth one
-      // 8-second duet video (never the 15 s price), once per user. Users who
+      // 3. First paid order of the Standard pack or larger: bonus credits
+      // worth one 5-second 480p video, once per user. Users who
       // had already paid before this rule don't get it on a later order.
       const bonusEligible =
         qualifiesForFirstOrderBonus({
@@ -501,7 +501,7 @@ async function handleCheckoutSuccess(session: any, provider: string) {
             .limit(1)
         ).length;
       if (bonusEligible) {
-        const bonus = resolveDuetCredits(await getAllConfigs());
+        const bonus = everygenCredits(5, '480p');
         await tx.insert(credit).values({
           id: getUuid(),
           userId: existingOrder.userId,

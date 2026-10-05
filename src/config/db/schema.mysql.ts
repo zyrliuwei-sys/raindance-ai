@@ -561,3 +561,33 @@ export type NewTicketMessage = typeof ticketMessage.$inferInsert;
 
 // ─── Custom tables ───────────────────────────────────────────────────────────
 // Add your own tables below this line.
+
+// ─── Raindance free posters ─────────────────────────────────────────────────
+// Anonymous seaside stills (Seedream), limited per device/IP per day. A paid
+// video animates one of these.
+
+export const everygenPoster = table(
+  'everygen_poster',
+  {
+    id: varchar191('id').primaryKey(),
+    ipHash: varchar191('ip_hash').notNull(),
+    deviceId: varchar191('device_id').notNull(),
+    userId: varchar191('user_id'),
+    status: varchar('status', { length: 50 }).notNull(),
+    style: varchar('style', { length: 50 }).notNull(),
+    requestId: text('request_id'),
+    // Original upload (Evolink file, kept 72 h) for the paid HD re-render.
+    photoUrl: text('photo_url'),
+    imageUrl: text('image_url'),
+    error: text('error'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => [
+    index('idx_everygen_poster_ip').on(t.ipHash, t.createdAt),
+    index('idx_everygen_poster_device').on(t.deviceId, t.createdAt),
+    index('idx_everygen_poster_created').on(t.createdAt),
+  ]
+);
+
+export type EverygenPoster = typeof everygenPoster.$inferSelect;
+export type NewEverygenPoster = typeof everygenPoster.$inferInsert;

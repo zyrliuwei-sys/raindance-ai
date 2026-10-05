@@ -11,8 +11,10 @@
     "VITE_APP_NAME": "Raindance AI",
     "VITE_APP_DESCRIPTION": "Turn one photo into a cinematic golden-hour seaside video.",
     "VITE_APP_LOGO": "/logo.svg",
-    "VITE_DEFAULT_LOCALE": "en"
+    "VITE_DEFAULT_LOCALE": "en",
+    "MEDIA_PUBLIC_URL": "https://media.raindance-ai.net"
   },
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "raindance-ai-media" }],
   "d1_databases": [
     {
       "binding": "DB",

@@ -666,3 +666,33 @@ export const hotelPreview = table(
 
 export type HotelPreview = typeof hotelPreview.$inferSelect;
 export type NewHotelPreview = typeof hotelPreview.$inferInsert;
+
+// ─── Raindance free posters ─────────────────────────────────────────────────
+// Anonymous seaside stills (Seedream), limited per device/IP per day. A paid
+// video animates one of these.
+
+export const everygenPoster = table(
+  'everygen_poster',
+  {
+    id: text('id').primaryKey(),
+    ipHash: text('ip_hash').notNull(),
+    deviceId: text('device_id').notNull(),
+    userId: text('user_id'),
+    status: text('status').notNull(),
+    style: text('style').notNull(),
+    requestId: text('request_id'),
+    // Original upload (Evolink file, kept 72 h) for the paid HD re-render.
+    photoUrl: text('photo_url'),
+    imageUrl: text('image_url'),
+    error: text('error'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => [
+    index('idx_everygen_poster_ip').on(t.ipHash, t.createdAt),
+    index('idx_everygen_poster_device').on(t.deviceId, t.createdAt),
+    index('idx_everygen_poster_created').on(t.createdAt),
+  ]
+);
+
+export type EverygenPoster = typeof everygenPoster.$inferSelect;
+export type NewEverygenPoster = typeof everygenPoster.$inferInsert;
