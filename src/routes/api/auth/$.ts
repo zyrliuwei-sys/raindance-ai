@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { getAuth } from '@/core/auth';
-import { getDbConfigs } from '@/modules/config/service';
+import { getAllConfigs } from '@/modules/config/service';
 
 // better-auth catch-all — the handler takes a standard Request and
 // returns a standard Response, so it mounts directly.
 async function handle(request: Request) {
-  const configs = await getDbConfigs();
+  const configs = await getAllConfigs();
   const auth = getAuth(configs);
   return auth.handler(request);
 }

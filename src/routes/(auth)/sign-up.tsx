@@ -3,7 +3,7 @@ import { useForm } from '@tanstack/react-form';
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
-import { authClient, signIn, signUp, useSession } from '@/core/auth/client';
+import { authClient, signUp, useSession } from '@/core/auth/client';
 import { Link, useRouter } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
 import { apiPost } from '@/lib/api-client';
@@ -16,6 +16,7 @@ import { track } from '@/lib/track';
 import { m } from '@/paraglide/messages.js';
 import { localizeHref } from '@/paraglide/runtime.js';
 import { usePublicConfig } from '@/hooks/use-public-config';
+import { useSocialSignIn } from '@/hooks/use-social-sign-in';
 import { TextField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -42,6 +43,7 @@ function SignUpPage() {
   // Set right before we navigate so the already-signed-in effect doesn't also fire.
   const navigatingRef = useRef(false);
   const [error, setError] = useState('');
+  const { signInWithProvider, socialSignInPending } = useSocialSignIn(setError);
 
   const [redirectParam, setRedirectParam] = useState<string | null>(null);
   const [callbackUrl, setCallbackUrl] = useState<string | null>(null);
@@ -164,11 +166,11 @@ function SignUpPage() {
     },
   });
 
-  async function handleSocial(provider: 'google' | 'github') {
+  function handleSocial(provider: 'google' | 'github') {
     // OAuth leaves the site, and the same button also signs existing users
     // in, so this is the intent, not a confirmed new account.
     track('sign_up_social_click', { method: provider });
-    await signIn.social({ provider, callbackURL: afterLoginUrl });
+    void signInWithProvider(provider, afterLoginUrl);
   }
 
   return (
@@ -205,7 +207,10 @@ function SignUpPage() {
               >
                 <FieldGroup>
                   {error && (
-                    <div className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm">
+                    <div
+                      role="alert"
+                      className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm"
+                    >
                       {error}
                     </div>
                   )}
@@ -216,6 +221,7 @@ function SignUpPage() {
                         <Button
                           variant="outline"
                           type="button"
+                          disabled={socialSignInPending}
                           onClick={() => handleSocial('google')}
                         >
                           <svg
@@ -235,6 +241,7 @@ function SignUpPage() {
                         <Button
                           variant="outline"
                           type="button"
+                          disabled={socialSignInPending}
                           onClick={() => handleSocial('github')}
                         >
                           <svg

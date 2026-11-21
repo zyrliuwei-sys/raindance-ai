@@ -8,6 +8,7 @@ import { currentPathWithQuery } from '@/lib/redirect';
 import { track } from '@/lib/track';
 import { m } from '@/paraglide/messages.js';
 import { usePublicConfig } from '@/hooks/use-public-config';
+import { useSocialSignIn } from '@/hooks/use-social-sign-in';
 import { TextField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
@@ -42,6 +43,7 @@ export default function AuthDialog({
 }) {
   const [mode, setMode] = useState<'sign-up' | 'sign-in'>('sign-up');
   const [error, setError] = useState('');
+  const { signInWithProvider, socialSignInPending } = useSocialSignIn(setError);
   const { data: configs = {} } = usePublicConfig();
   const signUpMode = mode === 'sign-up';
   const callbackUrl = currentPathWithQuery('/');
@@ -90,7 +92,10 @@ export default function AuthDialog({
         </DialogHeader>
         <FieldGroup>
           {error && (
-            <div className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm">
+            <div
+              role="alert"
+              className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm"
+            >
               {error}
             </div>
           )}
@@ -98,15 +103,13 @@ export default function AuthDialog({
             <Button
               variant="outline"
               type="button"
+              disabled={socialSignInPending}
               onClick={() => {
                 track('sign_up_social_click', {
                   method: 'google',
                   from: 'studio',
                 });
-                void signIn.social({
-                  provider: 'google',
-                  callbackURL: callbackUrl,
-                });
+                void signInWithProvider('google', window.location.href);
               }}
             >
               {m['common.sign.google_sign_in']()}

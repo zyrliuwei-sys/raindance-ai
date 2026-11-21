@@ -77,9 +77,10 @@ let emailVerificationEnabledLoaded = false;
 function getSocialProviders(configs: Record<string, string>) {
   const providers: Record<string, any> = {};
 
-  if (configs.google_client_id && configs.google_client_secret) {
+  const googleClientId = configs.google_client_id?.trim();
+  if (googleClientId && configs.google_client_secret) {
     providers.google = {
-      clientId: configs.google_client_id,
+      clientId: googleClientId,
       clientSecret: configs.google_client_secret,
     };
   }
@@ -201,12 +202,10 @@ function isEmailConfigured(configs: Record<string, string>): boolean {
 }
 
 function getAuthPlugins(configs: Record<string, string> | undefined) {
-  if (!configs) return [];
-  const plugins: any[] = [];
-  if (configs.google_client_id && configs.google_one_tap_enabled === 'true') {
-    plugins.push(oneTap());
-  }
-  return plugins;
+  const clientId = configs?.google_client_id?.trim();
+  return clientId && configs?.google_one_tap_enabled === 'true'
+    ? [oneTap({ clientId })]
+    : [];
 }
 
 export function getAuth(configs?: Record<string, string>) {

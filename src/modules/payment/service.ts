@@ -1,4 +1,4 @@
-import { and, desc, eq, isNull, like, ne } from 'drizzle-orm';
+import { and, desc, eq, gt, isNull, like, ne, sql } from 'drizzle-orm';
 
 import { db } from '@/core/db';
 import {
@@ -386,7 +386,7 @@ async function handleCheckoutSuccess(session: any, provider: string) {
     const orderUpdate: Record<string, any> = {
       status: OrderStatus.PAID,
       paymentResult: JSON.stringify(session.paymentResult),
-      paymentAmount: paymentInfo?.paymentAmount || null,
+      paymentAmount: paymentInfo?.paymentAmount ?? null,
       paymentCurrency: paymentInfo?.paymentCurrency || null,
       paymentEmail: paymentInfo?.paymentEmail || null,
       paidAt: paymentInfo?.paidAt || new Date(),
@@ -741,6 +741,22 @@ export async function cancelUserSubscription(params: {
 }
 
 // --- Query helpers ---
+
+export async function hasPaidOrder(userId: string): Promise<boolean> {
+  const [paid] = await db()
+    .select({ id: order.id })
+    .from(order)
+    .where(
+      and(
+        eq(order.userId, userId),
+        eq(order.status, OrderStatus.PAID),
+        gt(sql`coalesce(${order.paymentAmount}, ${order.amount})`, 0),
+        isNull(order.deletedAt)
+      )
+    )
+    .limit(1);
+  return Boolean(paid);
+}
 
 export async function getUserOrders(userId: string) {
   return db()

@@ -12,6 +12,7 @@ import {
   findPoster,
   PosterStatus,
 } from '@/modules/everygen-poster/service';
+import { hasPaidOrder } from '@/modules/payment/service';
 import { hasPermission } from '@/modules/rbac/service';
 import { enforceMinIntervalRateLimit } from '@/lib/rate-limit';
 import { respData, respErr } from '@/lib/resp';
@@ -58,8 +59,12 @@ async function POST({ request }: { request: Request }) {
     const configs = await getAllConfigs();
     const admin = await hasPermission(session.user.id, 'admin.*');
     const price = everygenCredits(options.duration, options.quality);
-    if (!admin && (await getBalance(session.user.id)) < price)
-      return respErr('Insufficient credits');
+    if (!admin) {
+      if (!(await hasPaidOrder(session.user.id)))
+        return respErr('Payment required');
+      if ((await getBalance(session.user.id)) < price)
+        return respErr('Insufficient credits');
+    }
     if (!configs.evolink_api_key)
       return respErr('Generation is not configured');
 

@@ -17,26 +17,9 @@ export const {
   resetPassword,
 } = authClient;
 
-// Build a per-call auth client with the Google One Tap plugin attached.
-// The plugin needs the client_id at construction time, so we can't add
-// it to the default `authClient` — callers must pass live configs.
-export function getAuthClient(configs: Record<string, string>) {
+export function createOneTapAuthClient(clientId: string) {
   return createAuthClient({
     baseURL,
-    plugins:
-      configs.google_client_id && configs.google_one_tap_enabled === 'true'
-        ? [
-            oneTapClient({
-              clientId: configs.google_client_id,
-              autoSelect: false,
-              cancelOnTapOutside: false,
-              context: 'signin',
-              promptOptions: {
-                baseDelay: 1000,
-                maxAttempts: 1,
-              },
-            }),
-          ]
-        : [],
+    plugins: [oneTapClient({ clientId, promptOptions: { maxAttempts: 0 } })],
   });
 }

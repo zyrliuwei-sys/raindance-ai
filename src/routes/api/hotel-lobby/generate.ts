@@ -16,6 +16,7 @@ import {
 import { getAllConfigs } from '@/modules/config/service';
 import { screenPrompt } from '@/modules/content-safety/service';
 import { getBalance } from '@/modules/credits/service';
+import { hasPaidOrder } from '@/modules/payment/service';
 import { hasPermission } from '@/modules/rbac/service';
 import { respData, respErr } from '@/lib/resp';
 
@@ -49,14 +50,17 @@ async function POST({ request }: { request: Request }) {
       return respErr(DIRECTION_BLOCKED);
     }
 
-    // Admins generate free; everyone else pays 7× the fal cost in credits.
-    // Checked first so an unpaid user always lands on the paywall.
+    // Check purchase and credit eligibility before starting provider work.
     const isAdmin = await hasPermission(session.user.id, 'admin.*');
     const length = isDuetLength(body?.length)
       ? body.length
       : DEFAULT_DUET_LENGTH;
     const price = resolveDuetCreditsFor(configs, length);
-    if (!isAdmin && (await getBalance(session.user.id)) < price) {
+    if (
+      !isAdmin &&
+      (!(await hasPaidOrder(session.user.id)) ||
+        (await getBalance(session.user.id)) < price)
+    ) {
       return respErr('Insufficient credits');
     }
 

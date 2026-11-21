@@ -1,67 +1,59 @@
-'use client';
+import { useEffect, useRef } from 'react';
 
-import { useEffect, useRef, useState } from 'react';
-
-import { getAuthClient, useSession } from '@/core/auth/client';
-import { currentPathWithQuery } from '@/lib/redirect';
+import { createOneTapAuthClient, useSession } from '@/core/auth/client';
+import { authCallbackUrl, resolveAfterAuthUrl } from '@/lib/redirect';
+import { deLocalizeHref } from '@/paraglide/runtime.js';
 import { usePublicConfig } from '@/hooks/use-public-config';
 
-// Mounts the Google One Tap prompt for signed-out visitors when the
-// admin has enabled it. Self-contained: pulls config from
-// /api/config/public, gates on session, and triggers at most once
-// per page load.
-//
-// Waits for the visitor's first interaction: prompting on load makes Chrome
-// log "Not signed in with the identity provider" (FedCM) for every visitor
-// without a Google session, which Lighthouse counts as a console error.
+function finishOneTapSignIn() {
+  const { pathname, search } = window.location;
+  const path = deLocalizeHref(pathname).replace(/\/$/, '');
+  if (path === '/sign-in' || path === '/sign-up') {
+    const params = new URLSearchParams(search);
+    window.location.replace(
+      authCallbackUrl(
+        resolveAfterAuthUrl({
+          callbackUrl: params.get('callbackUrl'),
+          redirect: params.get('redirect'),
+        })
+      )
+    );
+    return;
+  }
+
+  // Reload the session even when the current URL ends in a fragment.
+  window.location.reload();
+}
+
 export function GoogleOneTap() {
   const { data: session, isPending } = useSession();
   const { data: configs } = usePublicConfig();
-  const triggered = useRef(false);
-  const [interacted, setInteracted] = useState(false);
+  const handled = useRef(false);
+  const signedIn = Boolean(session?.user);
+  const enabled = configs?.google_one_tap_enabled === 'true';
+  const clientId = configs?.google_client_id?.trim();
 
   useEffect(() => {
-    const events = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
-    const onInteract = () => {
-      setInteracted(true);
-      events.forEach((e) => window.removeEventListener(e, onInteract));
-    };
-    events.forEach((e) =>
-      window.addEventListener(e, onInteract, { passive: true, once: true })
-    );
-    return () =>
-      events.forEach((e) => window.removeEventListener(e, onInteract));
-  }, []);
-
-  useEffect(() => {
-    if (!interacted) return;
-    if (triggered.current) return;
-    if (!configs) return;
-    if (isPending) return;
-    if (session?.user) return;
-    if (
-      configs.google_one_tap_enabled !== 'true' ||
-      !configs.google_client_id
-    ) {
+    if (isPending || handled.current) return;
+    if (signedIn) {
+      handled.current = true;
       return;
     }
+    if (!enabled || !clientId) return;
 
-    triggered.current = true;
-    const client = getAuthClient(configs);
-    (client as any)
-      .oneTap?.({
-        // Stay put: One Tap fires on whatever page the visitor is reading.
-        callbackURL: currentPathWithQuery('/'),
-        onPromptNotification: () => {
-          // Silently ignore dismissals / FedCM hiccups — the user can still
-          // sign in via the normal /sign-in page.
+    handled.current = true;
+    void createOneTapAuthClient(clientId)
+      .oneTap({
+        fetchOptions: {
+          onSuccess: ({ data }) => {
+            if (data?.user) finishOneTapSignIn();
+          },
         },
       })
       .catch(() => {
-        // Same — One Tap cancellations throw NetworkError/AbortError that
-        // aren't actionable.
+        // The regular Google sign-in button remains available if the prompt fails.
       });
-  }, [interacted, configs, session, isPending]);
+  }, [clientId, enabled, isPending, signedIn]);
 
   return null;
 }

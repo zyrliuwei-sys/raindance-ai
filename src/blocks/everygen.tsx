@@ -39,7 +39,7 @@ import { SiteUserMenu } from '@/components/site-user-menu';
 
 import '@/styles/everygen.css';
 
-// Loaded only once a generation is refused for lack of credits.
+// Load the pricing dialog when the viewer needs to purchase credits.
 const PaywallDialog = lazy(() => import('@/blocks/paywall-dialog'));
 const AuthDialog = lazy(() => import('@/blocks/auth-dialog'));
 const INSUFFICIENT_CREDITS = 'Insufficient credits';
@@ -411,8 +411,10 @@ function Studio() {
       track('video_start', { duration, quality });
     },
     onError: (error: Error) => {
-      // Server is the source of truth: out of credits → show the packs.
-      if (error.message === INSUFFICIENT_CREDITS) {
+      if (
+        error.message === 'Payment required' ||
+        error.message === INSUFFICIENT_CREDITS
+      ) {
         track('paywall_open', { from: 'studio' });
         setPaywall(true);
       } else if (error.message === 'Unauthorized') setAuthOpen(true);
@@ -842,7 +844,7 @@ function Studio() {
             onOpenChange={setAuthOpen}
             description={m['everygen.video.auth_description']()}
             // Carry on with what the visitor clicked: the server answers with
-            // the paywall when the new account has no credits yet.
+            // the paywall when the new account needs to purchase credits.
             onSignedIn={() => {
               signedInRef.current = true;
               if (authNextRef.current === 'poster') posterMutation.mutate();

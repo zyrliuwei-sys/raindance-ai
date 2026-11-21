@@ -28,6 +28,7 @@ import {
   findPreview,
   PreviewStatus,
 } from '@/modules/hotel-preview/service';
+import { hasPaidOrder } from '@/modules/payment/service';
 import { hasPermission } from '@/modules/rbac/service';
 import { respData, respErr } from '@/lib/resp';
 
@@ -86,7 +87,10 @@ async function POST({ request }: { request: Request }) {
       ? body.length
       : DEFAULT_DUET_LENGTH;
     const price = resolveDuetCreditsFor(configs, length);
-    if (!isAdmin && (await getBalance(userId)) < price) {
+    if (
+      !isAdmin &&
+      (!(await hasPaidOrder(userId)) || (await getBalance(userId)) < price)
+    ) {
       return respErr('Insufficient credits');
     }
     if (!configs.fal_api_key) return respErr('Generation is not configured');

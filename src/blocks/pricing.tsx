@@ -193,8 +193,9 @@ export function Pricing({
     }: {
       plan: PricingPlan;
       provider?: PaymentProvider;
-    }) =>
-      apiPost<{ checkout_url?: string }>('/api/payment/checkout', {
+    }) => {
+      const { pathname, search, hash } = window.location;
+      return apiPost<{ checkout_url?: string }>('/api/payment/checkout', {
         product_id: plan.productId,
         product_name: plan.productName || plan.name,
         plan_name: plan.plan?.name || plan.name,
@@ -206,9 +207,9 @@ export function Pricing({
         credits: plan.credits,
         credits_valid_days: plan.creditsValidDays,
         payment_provider: provider,
-        // Come back to the page the user paid from.
-        redirect: currentPathWithQuery('/settings/billing'),
-      }),
+        redirect: `${pathname}${search}${variant === 'dialog' ? '#create' : hash}`,
+      });
+    },
     onSuccess: (data) => {
       if (!data?.checkout_url) {
         toast.error('Checkout failed');

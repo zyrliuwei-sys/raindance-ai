@@ -14,6 +14,7 @@ import {
 import { m } from '@/paraglide/messages.js';
 import { localizeHref } from '@/paraglide/runtime.js';
 import { usePublicConfig } from '@/hooks/use-public-config';
+import { useSocialSignIn } from '@/hooks/use-social-sign-in';
 import { TextField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -37,6 +38,7 @@ function SignInPage() {
   // Set right before we navigate so the already-signed-in effect doesn't also fire.
   const navigatingRef = useRef(false);
   const [error, setError] = useState('');
+  const { signInWithProvider, socialSignInPending } = useSocialSignIn(setError);
 
   // callbackUrl: internal page path, goes there directly after login.
   // redirect: either an internal path (same thing) or an app protocol URL like
@@ -131,10 +133,6 @@ function SignInPage() {
     },
   });
 
-  async function handleSocial(provider: 'google' | 'github') {
-    await signIn.social({ provider, callbackURL: afterLoginUrl });
-  }
-
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -169,7 +167,10 @@ function SignInPage() {
               >
                 <FieldGroup>
                   {error && (
-                    <div className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm">
+                    <div
+                      role="alert"
+                      className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm"
+                    >
                       {error}
                     </div>
                   )}
@@ -180,7 +181,10 @@ function SignInPage() {
                         <Button
                           variant="outline"
                           type="button"
-                          onClick={() => handleSocial('google')}
+                          disabled={socialSignInPending}
+                          onClick={() =>
+                            signInWithProvider('google', afterLoginUrl)
+                          }
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +203,10 @@ function SignInPage() {
                         <Button
                           variant="outline"
                           type="button"
-                          onClick={() => handleSocial('github')}
+                          disabled={socialSignInPending}
+                          onClick={() =>
+                            signInWithProvider('github', afterLoginUrl)
+                          }
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
